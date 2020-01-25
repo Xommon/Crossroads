@@ -6,20 +6,20 @@ public class Car : MonoBehaviour
 {
     public float speed;
     public float maxSpeed;
-    public bool go;
+    public bool canGo;
 
     // Start is called before the first frame update
     void Start()
     {
         speed = 0;
         maxSpeed = 7f;
-        go = true;
+        canGo = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (go == true)
+        if (canGo == true)
         {
             if (speed < maxSpeed)
             {
@@ -30,8 +30,20 @@ public class Car : MonoBehaviour
             {
                 speed = maxSpeed;
             }
-
-            transform.position += new Vector3((speed / 100), -(speed / 200), 0);
         }
+        else
+        {
+            if (speed > 0)
+            {
+                // Deccelerate
+                speed -= 0.1f;
+            }
+            else
+            {
+                speed = 0;
+            }
+        }
+
+        transform.position += new Vector3((speed / 100), -(speed / 200), 0);
     }
 }
