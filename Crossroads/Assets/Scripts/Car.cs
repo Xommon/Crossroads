@@ -6,10 +6,13 @@ public class Car : MonoBehaviour
 {
     public float speed;
     public float maxSpeed;
+    public float acceleration;
     public string direction;
     public bool canGo;
+    public bool permissionToGo;
     public bool stopped;
     public float distanceFromIntersection;
+    public bool atIntersection;
 
     // Sprites
     public SpriteRenderer sr;
@@ -23,8 +26,11 @@ public class Car : MonoBehaviour
     {
         speed = 0;
         maxSpeed = 9f;
+        acceleration = 0.2f;
         canGo = true;
         stopped = false;
+        permissionToGo = false;
+        atIntersection = false;
 
         if (transform.position.x < 0 && transform.position.y >= 0)
         {
@@ -55,7 +61,7 @@ public class Car : MonoBehaviour
             if (speed < maxSpeed)
             {
                 // Accelerate
-                speed += 0.2f;
+                speed += acceleration;
             }
             else
             {
@@ -67,7 +73,7 @@ public class Car : MonoBehaviour
             if (speed > 0)
             {
                 // Decelerate
-                speed -= 0.4f;
+                speed -= (acceleration * 2);
             }
             else
             {
@@ -81,9 +87,14 @@ public class Car : MonoBehaviour
             transform.position += new Vector3((speed / 100), -(speed / 200), 0);
             sr.sprite = downRight;
 
-            if (Vector3.Distance(transform.position, Vector3.zero) < 3.82)
+            if (Vector3.Distance(transform.position, Vector3.zero) < 3.85 && permissionToGo == false)
             {
                 canGo = false;
+
+                if (speed == 0)
+                {
+                    atIntersection = true;
+                }
             }
         }
         else if (direction == "UR")
@@ -91,9 +102,14 @@ public class Car : MonoBehaviour
             transform.position += new Vector3((speed / 100), (speed / 200), 0);
             sr.sprite = upRight;
 
-            if (Vector3.Distance(transform.position, Vector3.zero) < 3.7)
+            if (Vector3.Distance(transform.position, Vector3.zero) < 3.7 && permissionToGo == false)
             {
                 canGo = false;
+
+                if (speed == 0)
+                {
+                    atIntersection = true;
+                }
             }
         }
         else if (direction == "UL")
@@ -101,9 +117,14 @@ public class Car : MonoBehaviour
             transform.position += new Vector3(-(speed / 100), (speed / 200), 0);
             sr.sprite = upLeft;
 
-            if (Vector3.Distance(transform.position, Vector3.zero) < 3.6)
+            if (Vector3.Distance(transform.position, Vector3.zero) < 3.55 && permissionToGo == false)
             {
                 canGo = false;
+
+                if (speed == 0)
+                {
+                    atIntersection = true;
+                }
             }
         }
         else if (direction == "DL")
@@ -111,9 +132,31 @@ public class Car : MonoBehaviour
             transform.position += new Vector3(-(speed / 100), -(speed / 200), 0);
             sr.sprite = downLeft;
 
-            if (Vector3.Distance(transform.position, Vector3.zero) < 2.8)
+            if (Vector3.Distance(transform.position, Vector3.zero) < 2.6 && permissionToGo == false)
             {
                 canGo = false;
+
+                if (speed == 0)
+                {
+                    atIntersection = true;
+                }
+            }
+        }
+
+        // Allow car to go through intersection when clicked
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            if (hit.collider != null)
+            {
+                if (hit.collider.gameObject.GetComponent<Car>().atIntersection == true)
+                {
+                    hit.collider.gameObject.GetComponent<Car>().permissionToGo = true;
+                    hit.collider.gameObject.GetComponent<Car>().canGo = true;
+                }
             }
         }
     }
