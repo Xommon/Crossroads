@@ -115,7 +115,7 @@ MonoBehaviour:
   speed: 0
   maxSpeed: 0
   acceleration: 0
-  direction: 
+  direction: {x: 0, y: 0, z: 0}
   emergencyStop: 0
   canGo: 0
   permissionToGo: 0
@@ -124,8 +124,7 @@ MonoBehaviour:
   atIntersection: 0
   frontBumper: {fileID: 7301793413289972098}
   backBumper: {fileID: 7301793413289972099}
-  intersection: {fileID: 807989278541779566, guid: e9e9b249cbe78e24e9305b8d8393a3ba,
-    type: 3}
+  intersection: {fileID: 0}
   sr: {fileID: 7301793413289972105}
   downRight: {fileID: 9075156759465972181, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
     type: 3}
@@ -161,7 +160,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7301793413289972106}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -177,7 +176,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7301793413289972106}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -211,7 +210,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7301793413289972106}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1

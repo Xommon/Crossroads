@@ -126,6 +126,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 807989278607420533}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &74890782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74890779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e5d63c8443a044886f581f9d017895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &321405455
 GameObject:
   m_ObjectHideFlags: 0
@@ -76383,7 +76395,7 @@ Transform:
   m_Children:
   - {fileID: 321405456}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1433144761
 GameObject:
@@ -76505,16 +76517,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7301793413289972098, guid: 01d1f5bb4efc51a4fba34bb0979c1854,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7301793413289972099, guid: 01d1f5bb4efc51a4fba34bb0979c1854,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7301793413289972104, guid: 01d1f5bb4efc51a4fba34bb0979c1854,
         type: 3}
       propertyPath: intersection
@@ -76563,7 +76565,7 @@ PrefabInstance:
     - target: {fileID: 7301793413289972110, guid: 01d1f5bb4efc51a4fba34bb0979c1854,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7301793413289972110, guid: 01d1f5bb4efc51a4fba34bb0979c1854,
         type: 3}

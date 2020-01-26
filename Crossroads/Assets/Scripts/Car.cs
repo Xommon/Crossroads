@@ -7,7 +7,7 @@ public class Car : MonoBehaviour
     public float speed;
     public float maxSpeed;
     public float acceleration;
-    public string direction;
+    public Vector3 direction;
     public float emergencyStop;
     public bool canGo;
     public bool permissionToGo;
@@ -35,22 +35,27 @@ public class Car : MonoBehaviour
         stopped = false;
         permissionToGo = false;
         atIntersection = false;
+        emergencyStop = 1;
 
         if (transform.position.x < 0 && transform.position.y >= 0)
         {
-            direction = "DR";
+            // Down Right
+            direction = new Vector3(2, -1, 0);
         }
         else if (transform.position.x < 0 && transform.position.y < 0)
         {
-            direction = "UR";
+            // Up Right
+            direction = new Vector3(2, 1, 0);
         }
         else if (transform.position.x >= 0 && transform.position.y < 0)
         {
-            direction = "UL";
+            // Up Left
+            direction = new Vector3(-2, 1, 0);
         }
         else if (transform.position.x >= 0 && transform.position.y >= 0)
         {
-            direction = "DL";
+            // Down Left
+            direction = new Vector3(-2, -1, 0);
         }
     }
 
@@ -58,8 +63,8 @@ public class Car : MonoBehaviour
     void Update()
     {
         // Stop the car before it hits obstacles
-        Debug.DrawRay(transform.position + new Vector3(-0.5f, 0.25f, 0), new Vector3(-2.1f, 1, 0), Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0.25f, 0), new Vector3(-2.1f, 1, 0), 0.5f);
+        Debug.DrawRay(transform.position + new Vector3(0.25f * direction.x, 0.25f * direction.y, 0), direction, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0.25f * direction.x, 0.25f * direction.y, 0), direction, 0.75f);
         if (hit) // Don't edit
         {
             Intersection intersection = hit.transform.GetComponent<Intersection>();
@@ -102,7 +107,7 @@ public class Car : MonoBehaviour
             if (speed > 0)
             {
                 // Decelerate
-                speed -= (acceleration * 2);
+                speed -= (acceleration * 2 * emergencyStop);
             }
             else
             {
@@ -111,22 +116,22 @@ public class Car : MonoBehaviour
         }
 
         // Point the car in the correct direction
-        if (direction == "DR")
+        if (direction == new Vector3(2, -1, 0))
         {
             transform.position += new Vector3((speed / 100), -(speed / 200), 0);
             sr.sprite = downRight;
         }
-        else if (direction == "UR")
+        else if (direction == new Vector3(2, 1, 0))
         {
             transform.position += new Vector3((speed / 100), (speed / 200), 0);
             sr.sprite = upRight;
         }
-        else if (direction == "UL")
+        else if (direction == new Vector3(-2, 1, 0))
         {
             transform.position += new Vector3(-(speed / 100), (speed / 200), 0);
             sr.sprite = upLeft;
         }
-        else if (direction == "DL")
+        else if (direction == new Vector3(-2, -1, 0))
         {
             transform.position += new Vector3(-(speed / 100), -(speed / 200), 0);
             sr.sprite = downLeft;
@@ -149,20 +154,5 @@ public class Car : MonoBehaviour
                 }
             }
         }
-    }
-
-    // Car stops if there's another car infront of it
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Car")
-        {
-            speed = 0;
-            canGo = false;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        canGo = true;
     }
 }
