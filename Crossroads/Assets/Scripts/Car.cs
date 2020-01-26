@@ -8,11 +8,15 @@ public class Car : MonoBehaviour
     public float maxSpeed;
     public float acceleration;
     public string direction;
+    public float emergencyStop;
     public bool canGo;
     public bool permissionToGo;
     public bool stopped;
     public float distanceFromIntersection;
     public bool atIntersection;
+    public Collider2D frontBumper;
+    public Collider2D backBumper;
+    public GameObject intersection;
 
     // Sprites
     public SpriteRenderer sr;
@@ -25,8 +29,8 @@ public class Car : MonoBehaviour
     void Start()
     {
         speed = 0;
-        maxSpeed = 9f;
-        acceleration = 0.2f;
+        maxSpeed = 12f;
+        acceleration = 0.5f;
         canGo = true;
         stopped = false;
         permissionToGo = false;
@@ -53,7 +57,32 @@ public class Car : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distanceFromIntersection = Vector3.Distance(transform.position, Vector3.zero);
+        // Stop the car before it hits obstacles
+        Debug.DrawRay(transform.position + new Vector3(-0.5f, 0.25f, 0), new Vector3(-2.1f, 1, 0), Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(-0.5f, 0.25f, 0), new Vector3(-2.1f, 1, 0), 0.5f);
+        if (hit) // Don't edit
+        {
+            Intersection intersection = hit.transform.GetComponent<Intersection>();
+            Car car = hit.transform.GetComponent<Car>();
+
+            if (intersection != null && permissionToGo == false)
+            {
+                canGo = false;
+
+                if (speed == 0)
+                {
+                    atIntersection = true;
+                }
+            }
+            else if (car != null)
+            {
+                canGo = false;
+            }
+            else
+            {
+                canGo = true;
+            }
+        }
 
         // Move and Stop the car
         if (canGo == true)
@@ -86,61 +115,21 @@ public class Car : MonoBehaviour
         {
             transform.position += new Vector3((speed / 100), -(speed / 200), 0);
             sr.sprite = downRight;
-
-            if (Vector3.Distance(transform.position, Vector3.zero) < 3.85 && permissionToGo == false)
-            {
-                canGo = false;
-
-                if (speed == 0)
-                {
-                    atIntersection = true;
-                }
-            }
         }
         else if (direction == "UR")
         {
             transform.position += new Vector3((speed / 100), (speed / 200), 0);
             sr.sprite = upRight;
-
-            if (Vector3.Distance(transform.position, Vector3.zero) < 3.7 && permissionToGo == false)
-            {
-                canGo = false;
-
-                if (speed == 0)
-                {
-                    atIntersection = true;
-                }
-            }
         }
         else if (direction == "UL")
         {
             transform.position += new Vector3(-(speed / 100), (speed / 200), 0);
             sr.sprite = upLeft;
-
-            if (Vector3.Distance(transform.position, Vector3.zero) < 3.55 && permissionToGo == false)
-            {
-                canGo = false;
-
-                if (speed == 0)
-                {
-                    atIntersection = true;
-                }
-            }
         }
         else if (direction == "DL")
         {
             transform.position += new Vector3(-(speed / 100), -(speed / 200), 0);
             sr.sprite = downLeft;
-
-            if (Vector3.Distance(transform.position, Vector3.zero) < 2.6 && permissionToGo == false)
-            {
-                canGo = false;
-
-                if (speed == 0)
-                {
-                    atIntersection = true;
-                }
-            }
         }
 
         // Allow car to go through intersection when clicked
@@ -149,15 +138,31 @@ public class Car : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
 
-            RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-            if (hit.collider != null)
+            RaycastHit2D hitMouse = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            if (hitMouse.collider != null)
             {
-                if (hit.collider.gameObject.GetComponent<Car>().atIntersection == true)
+                if (hitMouse.collider.gameObject.GetComponent<Car>().atIntersection == true)
                 {
-                    hit.collider.gameObject.GetComponent<Car>().permissionToGo = true;
-                    hit.collider.gameObject.GetComponent<Car>().canGo = true;
+                    hitMouse.collider.gameObject.GetComponent<Car>().permissionToGo = true;
+                    hitMouse.collider.gameObject.GetComponent<Car>().canGo = true;
+                    hitMouse.collider.gameObject.GetComponent<Car>().atIntersection = false;
                 }
             }
         }
+    }
+
+    // Car stops if there's another car infront of it
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Car")
+        {
+            speed = 0;
+            canGo = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        canGo = true;
     }
 }

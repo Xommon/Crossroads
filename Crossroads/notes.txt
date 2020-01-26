@@ -1,0 +1,15 @@
+Crossroads Notes:
+
+Distance from Intersection when stopped: 2.954865
+
+3,598129 - 12
+3,488743 - 11
+3,390037 - 10
+
+stop @ 2,9
+start @ 3,6
+dif = 0.7
+2,9/3,6 = 0,805
+
+if speed = 12 then stop @ 3,598129
+if speed = 6 then stop @ 7,196258
