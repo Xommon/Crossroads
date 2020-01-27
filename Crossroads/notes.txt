@@ -13,3 +13,6 @@ dif = 0.7
 
 if speed = 12 then stop @ 3,598129
 if speed = 6 then stop @ 7,196258
+
+12 > 1
+6 > 0.25

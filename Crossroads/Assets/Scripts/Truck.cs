@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Car : MonoBehaviour
+public class Truck : MonoBehaviour
 {
     public float speed;
     public float maxSpeed;
@@ -11,12 +11,11 @@ public class Car : MonoBehaviour
     public float emergencyStop;
     public bool canGo;
     public bool permissionToGo;
-    public bool pastIntersection;
+    public bool stopped;
     public float distanceFromIntersection;
     public bool atIntersection;
     public GameObject intersection;
     public GameObject objectInWay;
-    public float distanceFromObjectInWay;
 
     // Sprites
     public SpriteRenderer sr;
@@ -30,9 +29,9 @@ public class Car : MonoBehaviour
     {
         speed = 0;
         maxSpeed = 12;
-        acceleration = 0.25f;
+        acceleration = 0.2f;
         canGo = true;
-        pastIntersection = false;
+        stopped = false;
         permissionToGo = false;
         atIntersection = false;
         emergencyStop = 1;
@@ -63,11 +62,6 @@ public class Car : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (atIntersection && !permissionToGo)
-        {
-            canGo = false;
-        }
-
         // Stop the car before it hits obstacles
         Debug.DrawRay(transform.position + new Vector3(0.25f * direction.x, 0.25f * direction.y, 0), direction, Color.red);
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0.25f * direction.x, 0.25f * direction.y, 0), direction, 3.0f);
@@ -76,93 +70,31 @@ public class Car : MonoBehaviour
             Intersection intersection = hit.transform.GetComponent<Intersection>();
             Car car = hit.transform.GetComponent<Car>();
             objectInWay = hit.transform.gameObject;
+
+            if (intersection != null && permissionToGo == false)
+            {
+                canGo = false;
+                atIntersection = true;
+            }
+            else if (car != null)
+            {
+                canGo = false;
+            }
+            else
+            {
+                canGo = true;
+            }
         }
 
         // Emergency stop for objects in way
         if (objectInWay != null)
         {
-            if (objectInWay.transform.tag == "Intersection")
+            if (objectInWay.tag == "Vehicle")
             {
-                distanceFromObjectInWay = Vector3.Distance(transform.position, objectInWay.transform.position) - 1f;
-            }
-            else
-            {
-                distanceFromObjectInWay = Vector3.Distance(transform.position, objectInWay.transform.position) - 0.2f;
-            }
-
-            if (atIntersection == false && pastIntersection == false)
-            {
-                if (distanceFromObjectInWay >= 3f)
-                {
-                    canGo = true;
-                }
-                else if (distanceFromObjectInWay < 3f && distanceFromObjectInWay >= 2.5f)
-                {
-                    if (speed >= 12)
-                    {
-                        emergencyStop = 1.25f;
-                        canGo = false;
-                    }
-                    else if (speed < 12 && speed >= 9)
-                    {
-                        emergencyStop = 1f;
-                        canGo = false;
-                    }
-                    else if (speed < 9 && speed >= 6)
-                    {
-                        canGo = true;
-                    }
-                }
-                else if (distanceFromObjectInWay < 2.5f && distanceFromObjectInWay >= 1.5f)
-                {
-                    if (speed >= 12)
-                    {
-                        emergencyStop = 1.5f;
-                        canGo = false;
-                    }
-                    else if (speed < 12 && speed >= 9)
-                    {
-                        emergencyStop = 1.25f;
-                        canGo = false;
-                    }
-                    else if (speed < 9 && speed >= 6)
-                    {
-                        emergencyStop = 1f;
-                        canGo = false;
-                    }
-                    else if (speed < 6)
-                    {
-                        canGo = true;
-                    }
-                }
-                // Emergency stop
-                else if (distanceFromObjectInWay < 1.5f && distanceFromObjectInWay >= 0)
-                {
-                    if (speed >= 12)
-                    {
-                        emergencyStop = 2f;
-                        canGo = false;
-                    }
-                    else if (speed < 12 && speed >= 9)
-                    {
-                        emergencyStop = 1.5f;
-                        canGo = false;
-                    }
-                    else if (speed < 9 && speed >= 6)
-                    {
-                        emergencyStop = 1.25f;
-                        canGo = false;
-                    }
-                    else if (speed < 6)
-                    {
-                        emergencyStop = 1f;
-                        canGo = false;
-                    }
-                }
+                canGo = false;
+                emergencyStop = 1.25f;
             }
         }
-
-        
 
         // Move and Stop the car
         if (canGo == true)
@@ -225,11 +157,10 @@ public class Car : MonoBehaviour
                 {
                     hitMouse.collider.gameObject.GetComponent<Car>().permissionToGo = true;
                     hitMouse.collider.gameObject.GetComponent<Car>().canGo = true;
+                    hitMouse.collider.gameObject.GetComponent<Car>().atIntersection = false;
                 }
             }
         }
-        
-        
     }
 
     // Mark the car as either inside of or outside of the intersection
@@ -247,7 +178,6 @@ public class Car : MonoBehaviour
         if (collision.transform.tag == "Intersection")
         {
             atIntersection = false;
-            pastIntersection = true;
         }
     }
 
