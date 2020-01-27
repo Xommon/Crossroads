@@ -26,6 +26,27 @@ TextureImporter:
   - first:
       213: -5510767681339204569
     second: truck1_4
+  - first:
+      213: -1454870808682140939
+    second: car1_left
+  - first:
+      213: 3295146445257420671
+    second: car1_right
+  - first:
+      213: 7506864811405920489
+    second: car1_down
+  - first:
+      213: -2224692130358812910
+    second: car1_up
+  - first:
+      213: 4516733618014488438
+    second: turn_left
+  - first:
+      213: -5230075003472204785
+    second: turn_right
+  - first:
+      213: 8549013667438103870
+    second: turn_forward
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -226,7 +247,7 @@ TextureImporter:
         width: 32
         height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -247,7 +268,7 @@ TextureImporter:
         width: 32
         height: 26
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -268,7 +289,7 @@ TextureImporter:
         width: 32
         height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -289,7 +310,7 @@ TextureImporter:
         width: 31
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -297,6 +318,153 @@ TextureImporter:
       bones: []
       spriteID: db8c9517306b42a4aa9811ccb1cdd9bf
       internalID: -5510767681339204569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: car1_left
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 320
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10d195b86ff39074ab1f3d38f3e75fb0
+      internalID: -1454870808682140939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: car1_right
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 344
+        width: 31
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 188f921defe3894499b1db566498010f
+      internalID: 3295146445257420671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: car1_down
+      rect:
+        serializedVersion: 2
+        x: 878
+        y: 156
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a7b3e19e15699e4887359848e45ac07
+      internalID: 7506864811405920489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: car1_up
+      rect:
+        serializedVersion: 2
+        x: 831
+        y: 9
+        width: 17
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67208304a3678444c8de354262618bcf
+      internalID: -2224692130358812910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_left
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 485
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd3b2780a35db9d49b6e34f3533826b9
+      internalID: 4516733618014488438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_right
+      rect:
+        serializedVersion: 2
+        x: 903
+        y: 467
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6b8d1fd35669514d86ac14d0364cb66
+      internalID: -5230075003472204785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: turn_forward
+      rect:
+        serializedVersion: 2
+        x: 925
+        y: 485
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a65d5c0d05924c149b27c99a158c58cc
+      internalID: 8549013667438103870
       vertices: []
       indices: 
       edges: []

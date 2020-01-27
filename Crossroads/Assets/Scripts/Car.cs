@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
+    public GameManager gameManager;
     public float speed;
     public float maxSpeed;
     public float acceleration;
@@ -17,6 +18,11 @@ public class Car : MonoBehaviour
     public GameObject intersection;
     public GameObject objectInWay;
     public float distanceFromObjectInWay;
+    public string turning;
+    public SpriteRenderer turnSignal;
+    public Sprite turnForward;
+    public Sprite turnRight;
+    public Sprite turnLeft;
 
     // Sprites
     public SpriteRenderer sr;
@@ -29,14 +35,13 @@ public class Car : MonoBehaviour
     void Start()
     {
         speed = 0;
-        maxSpeed = 12;
-        acceleration = 0.25f;
         canGo = true;
         pastIntersection = false;
         permissionToGo = false;
         atIntersection = false;
         emergencyStop = 1;
         objectInWay = null;
+        turnSignal.sprite = null;
 
         if (transform.position.x < 0 && transform.position.y >= 0)
         {
@@ -83,10 +88,12 @@ public class Car : MonoBehaviour
         {
             if (objectInWay.transform.tag == "Intersection")
             {
+                // Distance from an intersection
                 distanceFromObjectInWay = Vector3.Distance(transform.position, objectInWay.transform.position) - 1f;
             }
             else
             {
+                // Distance from other vehicle/pedestrian/etc
                 distanceFromObjectInWay = Vector3.Distance(transform.position, objectInWay.transform.position) - 0.2f;
             }
 
@@ -135,7 +142,6 @@ public class Car : MonoBehaviour
                         canGo = true;
                     }
                 }
-                // Emergency stop
                 else if (distanceFromObjectInWay < 1.5f && distanceFromObjectInWay >= 0)
                 {
                     if (speed >= 12)
@@ -161,8 +167,6 @@ public class Car : MonoBehaviour
                 }
             }
         }
-
-        
 
         // Move and Stop the car
         if (canGo == true)
@@ -225,11 +229,41 @@ public class Car : MonoBehaviour
                 {
                     hitMouse.collider.gameObject.GetComponent<Car>().permissionToGo = true;
                     hitMouse.collider.gameObject.GetComponent<Car>().canGo = true;
+
+                    if (turning == "left")
+                    {
+                        hitMouse.collider.gameObject.GetComponent<Car>().Left();
+                    }
+                    else if (turning == "right")
+                    {
+                        hitMouse.collider.gameObject.GetComponent<Car>().Right();
+                    }
                 }
             }
         }
         
-        
+        // Destroy car if outside of view
+        if ((transform.position.x < -13 || transform.position.x > 13) && pastIntersection == true)
+        {
+            gameManager.queue.Remove(gameObject.gameObject);
+            if (direction == new Vector3(2, -1, 0))
+            {
+                gameManager.nwQueue.Remove(gameObject.gameObject);
+            }
+            else if (direction == new Vector3(2, 1, 0))
+            {
+                gameManager.swQueue.Remove(gameObject.gameObject);
+            }
+            else if (direction == new Vector3(-2, 1, 0))
+            {
+                gameManager.seQueue.Remove(gameObject.gameObject);
+            }
+            else if (direction == new Vector3(-2, -1, 0))
+            {
+                gameManager.neQueue.Remove(gameObject.gameObject);
+            }
+            Destroy(gameObject);
+        }
     }
 
     // Mark the car as either inside of or outside of the intersection
@@ -239,6 +273,31 @@ public class Car : MonoBehaviour
         {
             speed = 0;
             atIntersection = true;
+
+            gameManager.queue.Add(gameObject.gameObject);
+
+            // Choose which direction the car intends to turn
+            if (turning != "forward" || turning != "right" || turning != "left")
+            {
+                if (gameManager.PercentChance(50))
+                {
+                    // 50%
+                    turning = "forward";
+                    turnSignal.sprite = turnForward;
+                }
+                else if (gameManager.PercentChance(50))
+                {
+                    // 25%
+                    turning = "right";
+                    turnSignal.sprite = turnRight;
+                }
+                else
+                {
+                    // 25%
+                    turning = "left";
+                    turnSignal.sprite = turnLeft;
+                }
+            }
         }
     }
 
@@ -254,5 +313,53 @@ public class Car : MonoBehaviour
     public Vector2 SpeedMultiple(float multiple)
     {
         return new Vector2(multiple, ((multiple + 3) / 4));
+    }
+
+    public void Right()
+    {
+        if (direction == new Vector3(2, -1, 0))
+        {
+            //DownRight to DownLeft
+            direction = new Vector3(-2, -1, 0);
+        }
+        else if (direction == new Vector3(-2, -1, 0))
+        {
+            //DownLeft to UpLeft
+            direction = new Vector3(-2, 1, 0);
+        }
+        else if (direction == new Vector3(-2, 1, 0))
+        {
+            //UpLeft to UpRight
+            direction = new Vector3(2, 1, 0);
+        }
+        else if (direction == new Vector3(2, 1, 0))
+        {
+            //UpRight to DownRight
+            direction = new Vector3(2, -1, 0);
+        }
+    }
+
+    public void Left()
+    {
+        if (direction == new Vector3(2, -1, 0))
+        {
+            //DownRight to UpRight
+            direction = new Vector3(2, 1, 0);
+        }
+        else if (direction == new Vector3(-2, -1, 0))
+        {
+            //DownLeft to DownRight
+            direction = new Vector3(2, -1, 0);
+        }
+        else if (direction == new Vector3(-2, 1, 0))
+        {
+            //UpLeft to DownLeft
+            direction = new Vector3(-2, -1, 0);
+        }
+        else if (direction == new Vector3(2, 1, 0))
+        {
+            //UpRight to UpLeft
+            direction = new Vector3(-2, 1, 0);
+        }
     }
 }
