@@ -16,11 +16,10 @@ public class Car : MonoBehaviour
     public bool pastIntersection;
     public float distanceFromIntersection;
     public bool atIntersection;
-    public GameObject intersection;
+    public Intersection intersection;
     public GameObject objectInWay;
     public float distanceFromObjectInWay;
     public string turning;
-    public SpriteRenderer turnSignal;
     public Sprite turnForward;
     public Sprite turnRight;
     public Sprite turnLeft;
@@ -29,6 +28,7 @@ public class Car : MonoBehaviour
     Vector3 newDirection = new Vector3();
     public float xDirection;
     public float yDirection;
+    public float delay;
 
     // Sprites
     public SpriteRenderer sr;
@@ -51,9 +51,10 @@ public class Car : MonoBehaviour
         atIntersection = false;
         emergencyStop = 1;
         objectInWay = null;
-        turnSignal.sprite = null;
         turningRight = false;
         turningLeft = false;
+        intersection = FindObjectOfType<Intersection>();
+        delay = 0;
 
         if (transform.position.x < 0 && transform.position.y >= 0)
         {
@@ -95,8 +96,6 @@ public class Car : MonoBehaviour
             canGo = false;
         }
 
-        turnSignal.transform.rotation = new Quaternion(0, 0, direction, 0);
-
         // Stop the car before it hits obstacles
         Debug.DrawRay(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), Color.red);
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), 3.0f);
@@ -127,7 +126,7 @@ public class Car : MonoBehaviour
                 {
                     canGo = true;
                 }
-                else if (distanceFromObjectInWay < 3f && distanceFromObjectInWay >= 2.5f)
+                else if (distanceFromObjectInWay < 3f && distanceFromObjectInWay >= 2.25f)
                 {
                     if (speed >= 12)
                     {
@@ -144,7 +143,7 @@ public class Car : MonoBehaviour
                         canGo = true;
                     }
                 }
-                else if (distanceFromObjectInWay < 2.5f && distanceFromObjectInWay >= 1.5f)
+                else if (distanceFromObjectInWay < 2.25f && distanceFromObjectInWay >= 1.15f)
                 {
                     if (speed >= 12)
                     {
@@ -166,7 +165,7 @@ public class Car : MonoBehaviour
                         canGo = true;
                     }
                 }
-                else if (distanceFromObjectInWay < 1.5f && distanceFromObjectInWay >= 0)
+                else if (distanceFromObjectInWay < 1.15f && distanceFromObjectInWay >= 0)
                 {
                     if (speed >= 12)
                     {
@@ -312,108 +311,175 @@ public class Car : MonoBehaviour
             if (rotation == 45)
             {
                 // UpRight(2, 1) to DownRight(2, -1)
-                if (yDirection > -1)
+                delay++;
+                if (delay > 40)
                 {
-                    yDirection -= 1.25f * Time.deltaTime;
-                    direction--;
-                }
-                else
-                {
-                    yDirection = -1;
-                    turningRight = false;
+                    if (yDirection > -1)
+                    {
+                        yDirection -= 7.0f * Time.deltaTime * (maxSpeed / 12);
+                        direction -= 6.0f;
+                    }
+                    else
+                    {
+                        yDirection = -1;
+                        turningRight = false;
+                    }
                 }
             }
             else if (rotation == 135)
             {
                 // UpLeft(-2, 1) to UpRight(2, 1)
-                if (xDirection < 2)
+                delay++;
+                if (delay > 40)
                 {
-                    xDirection += 2.5f * Time.deltaTime;
-                    direction--;
-                }
-                else
-                {
-                    xDirection = 2;
-                    turningRight = false;
+                    if (xDirection < 2)
+                    {
+                        xDirection += 14.0f * Time.deltaTime * (maxSpeed / 12);
+                        direction -= 6.0f;
+                    }
+                    else
+                    {
+                        xDirection = 2;
+                        turningRight = false;
+                    }
                 }
             }
             else if (rotation == 225)
             {
                 // DownLeft(-2, -1) to UpLeft(-2, 1)
-                if (yDirection < 1)
+                delay++;
+                if (delay > 40)
                 {
-                    yDirection += 1.25f * Time.deltaTime;
-                    direction--;
-                }
-                else
-                {
-                    yDirection = 1;
-                    turningRight = false;
+                    if (yDirection < 1)
+                    {
+                        yDirection += 7.0f * Time.deltaTime * (maxSpeed / 12);
+                        direction -= 6.0f;
+                    }
+                    else
+                    {
+                        yDirection = 1;
+                        turningRight = false;
+                    }
                 }
             }
             else if (rotation == 315)
             {
                 // DownRight(2, -1) to DownLeft(-2, -1)
-                if (xDirection > -2)
+                delay++;
+                if (delay > 40)
                 {
-                    xDirection -= 2.5f * Time.deltaTime;
-                    direction--;
-                }
-                else
-                {
-                    xDirection = -2;
-                    turningRight = false;
+                    if (xDirection > -2)
+                    {
+                        xDirection -= 14.0f * Time.deltaTime * (maxSpeed / 12);
+                        direction -= 6.0f;
+                    }
+                    else
+                    {
+                        xDirection = -2;
+                        turningRight = false;
+                    }
                 }
             }
         }
 
-        if (turningLeft == true)
+        if (turningLeft == true && permissionToGo == true)
         {
-            //Vector3 newDirection = new Vector3();
+            if (rotation == 45)
+            {
+                // UpRight(2, 1) to UpLeft(-2, 1)
+                delay++;
+                if (delay > 41)
+                {
+                    if (xDirection > -2)
+                    {
+                        xDirection -= 5.5f * Time.deltaTime * (maxSpeed / 12);
+                        direction += 3.0f;
 
-            /*if (direction == new Vector3(2, -1, 0))
-            {
-                //DownRight to UpRight
-                newDirection = new Vector3(2, 1, 0);
+                        if (direction > 135)
+                        {
+                            direction = 135;
+                        }
+                    }
+                    else
+                    {
+                        direction = 135;
+                        xDirection = -2;
+                        turningLeft = false;
+                    }
+                }
             }
-            else if (direction == new Vector3(-2, -1, 0))
+            else if (rotation == 135)
             {
-                //DownLeft to DownRight
-                newDirection = new Vector3(2, -1, 0);
-            }
-            else if (direction == new Vector3(-2, 1, 0))
-            {
-                //UpLeft to DownLeft
-                newDirection = new Vector3(-2, -1, 0);
-            }
-            else if (direction == new Vector3(2, 1, 0))
-            {
-                //UpRight to UpLeft
-                newDirection = new Vector3(-2, 1, 0);
-            }
+                // UpLeft(-2, 1) to DownLeft(-2, -1)
+                delay++;
+                if (delay > 41)
+                {
+                    if (yDirection > -1)
+                    {
+                        yDirection -= 2.75f * Time.deltaTime * (maxSpeed / 12);
+                        direction += 3.0f;
 
-            if (direction.x < newDirection.x)
-            {
-                direction += new Vector3(0.2f, 0, 0);
+                        if (direction > 225)
+                        {
+                            direction = 225;
+                        }
+                    }
+                    else
+                    {
+                        direction = 225;
+                        yDirection = -1;
+                        turningLeft = false;
+                    }
+                }
             }
-            else if (direction.x > newDirection.x)
+            else if (rotation == 225)
             {
-                direction -= new Vector3(0.2f, 0, 0);
-            }
+                // DownLeft(-2, -1) to DownRight(2, -1)
+                delay++;
+                if (delay > 41)
+                {
+                    if (xDirection < 2)
+                    {
+                        xDirection += 5.5f * Time.deltaTime * (maxSpeed / 12);
+                        direction++;
 
-            if (direction.y < newDirection.y)
-            {
-                direction += new Vector3(0, 0.1f, 0);
+                        if (direction > 315)
+                        {
+                            direction = 315;
+                        }
+                    }
+                    else
+                    {
+                        direction = 315;
+                        xDirection = 2;
+                        turningLeft = false;
+                    }
+                }
             }
-            else if (direction.y > newDirection.y)
+            else if (rotation == 315)
             {
-                direction -= new Vector3(0, 0.1f, 0);
-            }
+                // DownRight(2, -1) to UpRight(2, 1)
+                delay++;
+                if (delay > 41)
+                {
+                    if (yDirection < 1)
+                    {
+                        yDirection += 2.75f * Time.deltaTime * (maxSpeed / 12);
+                        direction++;
 
-            if (direction == newDirection)
-            {
-                turningLeft = false;
-            }*/
+                        if (direction > 45 && direction < 50)
+                        {
+                            direction = 45;
+                        }
+                    }
+                    else
+                    {
+                        direction = 45;
+                        yDirection = 1;
+                        turningLeft = false;
+                    }
+                }
+            }
         }
 
         // Destroy car if outside of view
@@ -437,23 +503,71 @@ public class Car : MonoBehaviour
             // Choose which direction the car intends to turn
             if (turning == "")
             {
-                if (gameManager.PercentChance(0))
+                if (gameManager.PercentChance(50))
                 {
                     // 50%
                     turning = "forward";
-                    turnSignal.sprite = turnForward;
+                    
+                    if (direction == 135)
+                    {
+                        intersection.SETurnSignalSR.sprite = turnForward;
+                    }
+                    else if(direction == 315)
+                    {
+                        intersection.NWTurnSignalSR.sprite = turnForward;
+                    }
+                    else if (direction == 45)
+                    {
+                        intersection.SWTurnSignalSR.sprite = turnForward;
+                    }
+                    else if(direction == 225)
+                    {
+                        intersection.NETurnSignalSR.sprite = turnForward;
+                    }
                 }
-                else if (gameManager.PercentChance(100))
+                else if (gameManager.PercentChance(50))
                 {
                     // 25%
                     turning = "right";
-                    turnSignal.sprite = turnRight;
+
+                    if (direction == 135)
+                    {
+                        intersection.SETurnSignalSR.sprite = turnRight;
+                    }
+                    else if (direction == 315)
+                    {
+                        intersection.NWTurnSignalSR.sprite = turnRight;
+                    }
+                    else if (direction == 45)
+                    {
+                        intersection.SWTurnSignalSR.sprite = turnRight;
+                    }
+                    else if (direction == 225)
+                    {
+                        intersection.NETurnSignalSR.sprite = turnRight;
+                    }
                 }
                 else
                 {
                     // 25%
                     turning = "left";
-                    turnSignal.sprite = turnLeft;
+
+                    if (direction == 135)
+                    {
+                        intersection.SETurnSignalSR.sprite = turnLeft;
+                    }
+                    else if (direction == 315)
+                    {
+                        intersection.NWTurnSignalSR.sprite = turnLeft;
+                    }
+                    else if (direction == 45)
+                    {
+                        intersection.SWTurnSignalSR.sprite = turnLeft;
+                    }
+                    else if (direction == 225)
+                    {
+                        intersection.NETurnSignalSR.sprite = turnLeft;
+                    }
                 }
             }
         }
@@ -469,6 +583,23 @@ public class Car : MonoBehaviour
                 turningLeft = true;
                 turningRight = false;
             }
+
+            if (rotation == 135)
+            {
+                intersection.SETurnSignalSR.sprite = null;
+            }
+            else if (rotation == 315)
+            {
+                intersection.NWTurnSignalSR.sprite = null;
+            }
+            else if (rotation == 45)
+            {
+                intersection.SWTurnSignalSR.sprite = null;
+            }
+            else if (rotation == 225)
+            {
+                intersection.NETurnSignalSR.sprite = null;
+            }
         }
     }
 
@@ -478,8 +609,6 @@ public class Car : MonoBehaviour
         {
             atIntersection = false;
             pastIntersection = true;
-
-            turnSignal.sprite = null;
             turning = "";
         }
     }

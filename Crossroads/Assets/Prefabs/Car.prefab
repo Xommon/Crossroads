@@ -201,7 +201,8 @@ MonoBehaviour:
   speed: 0
   maxSpeed: 12
   acceleration: 0.25
-  direction: {x: 0, y: 0, z: 0}
+  direction: 0
+  rotation: 0
   emergencyStop: 0
   canGo: 0
   permissionToGo: 0
@@ -212,7 +213,6 @@ MonoBehaviour:
   objectInWay: {fileID: 0}
   distanceFromObjectInWay: 0
   turning: 
-  turnSignal: {fileID: 900422018}
   turnForward: {fileID: 8549013667438103870, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
     type: 3}
   turnRight: {fileID: -5230075003472204785, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
