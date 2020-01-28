@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject car;
     public GameObject truck;
+    public float gameTime;
 
     public List<GameObject> queue = new List<GameObject>();
     public List<GameObject> neQueue = new List<GameObject>();
@@ -32,7 +33,7 @@ public class GameManager : MonoBehaviour
             percent = 0;
         }
 
-        float selection = Random.Range(0.0f, 101.0f);
+        float selection = Random.Range(0.0f, 100.0f);
         if (selection <= percent)
         {
             return true;
@@ -46,11 +47,14 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        gameTime = 1;
     }
 
     void Update()
     {
+        // Game Time
+        Time.timeScale = gameTime;
+
         if (seconds.ToString().Length > 1)
         {
             if (seconds.ToString().Substring(1, 1) == ".")

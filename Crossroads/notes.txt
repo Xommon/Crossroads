@@ -16,3 +16,5 @@ if speed = 6 then stop @ 7,196258
 
 12 > 1
 6 > 0.25
+
+/// CARS HIT EACH OTHER WHEN GAME SPEED IS HIGHER

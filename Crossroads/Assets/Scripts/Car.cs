@@ -8,7 +8,7 @@ public class Car : MonoBehaviour
     public float speed;
     public float maxSpeed;
     public float acceleration;
-    public Vector3 direction;
+    public float direction;
     public float emergencyStop;
     public bool canGo;
     public bool permissionToGo;
@@ -23,6 +23,11 @@ public class Car : MonoBehaviour
     public Sprite turnForward;
     public Sprite turnRight;
     public Sprite turnLeft;
+    public bool turningRight;
+    public bool turningLeft;
+    Vector3 newDirection = new Vector3();
+    public float xDirection;
+    public float yDirection;
 
     // Sprites
     public SpriteRenderer sr;
@@ -30,6 +35,10 @@ public class Car : MonoBehaviour
     public Sprite upRight;
     public Sprite downLeft;
     public Sprite upLeft;
+    public Sprite right;
+    public Sprite left;
+    public Sprite up;
+    public Sprite down;
 
     // Start is called before the first frame update
     void Start()
@@ -42,26 +51,36 @@ public class Car : MonoBehaviour
         emergencyStop = 1;
         objectInWay = null;
         turnSignal.sprite = null;
+        turningRight = false;
+        turningLeft = false;
 
         if (transform.position.x < 0 && transform.position.y >= 0)
         {
             // Down Right
-            direction = new Vector3(2, -1, 0);
+            xDirection = 2;
+            yDirection = -1;
+            direction = 315;
         }
         else if (transform.position.x < 0 && transform.position.y < 0)
         {
             // Up Right
-            direction = new Vector3(2, 1, 0);
+            xDirection = 2;
+            yDirection = 1;
+            direction = 45;
         }
         else if (transform.position.x >= 0 && transform.position.y < 0)
         {
             // Up Left
-            direction = new Vector3(-2, 1, 0);
+            xDirection = -2;
+            yDirection = 1;
+            direction = 135;
         }
         else if (transform.position.x >= 0 && transform.position.y >= 0)
         {
             // Down Left
-            direction = new Vector3(-2, -1, 0);
+            xDirection = -2;
+            yDirection = -1;
+            direction = 225;
         }
     }
 
@@ -74,8 +93,8 @@ public class Car : MonoBehaviour
         }
 
         // Stop the car before it hits obstacles
-        Debug.DrawRay(transform.position + new Vector3(0.25f * direction.x, 0.25f * direction.y, 0), direction, Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0.25f * direction.x, 0.25f * direction.y, 0), direction, 3.0f);
+        Debug.DrawRay(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), 3.0f);
         if (hit) // Don't edit
         {
             Intersection intersection = hit.transform.GetComponent<Intersection>();
@@ -164,6 +183,10 @@ public class Car : MonoBehaviour
                         emergencyStop = 1f;
                         canGo = false;
                     }
+                    else
+                    {
+                        canGo = true;
+                    }
                 }
             }
         }
@@ -194,27 +217,54 @@ public class Car : MonoBehaviour
             }
         }
 
-        // Point the car in the correct direction
-        if (direction == new Vector3(2, -1, 0))
+        // Point the car in the correct direction and use the right sprites
+        if (direction >= 360 || direction < 0)
         {
-            transform.position += new Vector3((speed / 100), -(speed / 200), 0);
-            sr.sprite = downRight;
+            direction = 0;
         }
-        else if (direction == new Vector3(2, 1, 0))
+
+        if (direction < 22.5f && direction >= 337.5f)
         {
-            transform.position += new Vector3((speed / 100), (speed / 200), 0);
+            // Right
+            sr.sprite = right;
+        }
+        else if (direction < 67.5f && direction >= 22.5f)
+        {
+            // UpRight
             sr.sprite = upRight;
         }
-        else if (direction == new Vector3(-2, 1, 0))
+        else if (direction < 112.5f && direction >= 67.5f)
         {
-            transform.position += new Vector3(-(speed / 100), (speed / 200), 0);
+            // Up
+            sr.sprite = up;
+        }
+        else if (direction < 157.5f && direction >= 112.5f)
+        {
+            // UpLeft
             sr.sprite = upLeft;
         }
-        else if (direction == new Vector3(-2, -1, 0))
+        else if (direction < 202.5f && direction >= 157.5f)
         {
-            transform.position += new Vector3(-(speed / 100), -(speed / 200), 0);
+            // Left
+            sr.sprite = left;
+        }
+        else if (direction < 247.5f && direction >= 202.5f)
+        {
+            // DownLeft
             sr.sprite = downLeft;
         }
+        else if (direction < 292.5f && direction >= 247.5f)
+        {
+            // Down
+            sr.sprite = down;
+        }
+        else if (direction < 337.5f && direction >= 292.5f)
+        {
+            // DownRight
+            sr.sprite = downRight;
+        }
+
+        transform.position += new Vector3((speed / 3 * Time.deltaTime) * (xDirection / 2), (speed / 6 * Time.deltaTime) * (yDirection), 0);
 
         // Allow car to go through intersection when clicked
         if (Input.GetMouseButtonDown(0))
@@ -225,43 +275,145 @@ public class Car : MonoBehaviour
             RaycastHit2D hitMouse = Physics2D.Raycast(mousePos2D, Vector2.zero);
             if (hitMouse.collider != null)
             {
-                if (hitMouse.collider.gameObject.GetComponent<Car>().atIntersection == true)
+                if (hitMouse.collider.gameObject.GetComponent<Car>() != null)
                 {
-                    hitMouse.collider.gameObject.GetComponent<Car>().permissionToGo = true;
-                    hitMouse.collider.gameObject.GetComponent<Car>().canGo = true;
+                    if (hitMouse.collider.gameObject.GetComponent<Car>().atIntersection == true)
+                    {
+                        hitMouse.collider.gameObject.GetComponent<Car>().permissionToGo = true;
+                        hitMouse.collider.gameObject.GetComponent<Car>().canGo = true;
 
-                    if (turning == "left")
-                    {
-                        hitMouse.collider.gameObject.GetComponent<Car>().Left();
-                    }
-                    else if (turning == "right")
-                    {
-                        hitMouse.collider.gameObject.GetComponent<Car>().Right();
+                        if (turning == "left")
+                        {
+                            turningLeft = true;
+                            turningRight = false;
+                        }
+                        else if (turning == "right")
+                        {
+                            turningRight = true;
+                            turningLeft = false;
+                        }
                     }
                 }
             }
         }
-        
+
+        // Turn right/left
+        if (turningRight == true)
+        {
+            //Vector3 newDirection = new Vector3();
+
+            /*if (direction == new Vector3(2, -1, 0))
+            {
+                //DownRight to DownLeft
+                newDirection = new Vector3(-2, -1, 0);
+
+                if (direction.x > newDirection.x)
+                {
+                    direction -= new Vector3(0.08f, 0, 0);
+                }
+            }
+            else if (direction == new Vector3(-2, -1, 0))
+            {
+                //DownLeft to UpLeft
+                newDirection = new Vector3(-2, 1, 0);
+            }
+            else if (direction == new Vector3(-2, 1, 0))
+            {
+                //UpLeft to UpRight
+                newDirection = new Vector3(2, 1, 0);
+            }
+            else if (direction == new Vector3(2, 1, 0))
+            {
+                //UpRight to DownRight
+                newDirection = new Vector3(2, -1, 0);
+            }
+            
+            if (direction.x < newDirection.x)
+            {
+                direction += new Vector3(0.2f, 0, 0);
+            }
+            else if (direction.x > newDirection.x)
+            {
+                direction -= new Vector3(0.2f, 0, 0);
+            }
+
+            if (direction.y < newDirection.y)
+            {
+                direction += new Vector3(0, 0.1f, 0);
+            }
+            else if (direction.y > newDirection.y)
+            {
+                direction -= new Vector3(0, 0.1f, 0);
+            }
+
+            if (xDirection < 0.08)
+            {
+                xDirection += 0.008f;
+            }
+            else
+            {
+                xDirection = 0.08f;
+            }
+
+            if (direction == newDirection)
+            {
+                turningRight = false;
+            }*/
+        }
+
+        if (turningLeft == true)
+        {
+            //Vector3 newDirection = new Vector3();
+
+            /*if (direction == new Vector3(2, -1, 0))
+            {
+                //DownRight to UpRight
+                newDirection = new Vector3(2, 1, 0);
+            }
+            else if (direction == new Vector3(-2, -1, 0))
+            {
+                //DownLeft to DownRight
+                newDirection = new Vector3(2, -1, 0);
+            }
+            else if (direction == new Vector3(-2, 1, 0))
+            {
+                //UpLeft to DownLeft
+                newDirection = new Vector3(-2, -1, 0);
+            }
+            else if (direction == new Vector3(2, 1, 0))
+            {
+                //UpRight to UpLeft
+                newDirection = new Vector3(-2, 1, 0);
+            }
+
+            if (direction.x < newDirection.x)
+            {
+                direction += new Vector3(0.2f, 0, 0);
+            }
+            else if (direction.x > newDirection.x)
+            {
+                direction -= new Vector3(0.2f, 0, 0);
+            }
+
+            if (direction.y < newDirection.y)
+            {
+                direction += new Vector3(0, 0.1f, 0);
+            }
+            else if (direction.y > newDirection.y)
+            {
+                direction -= new Vector3(0, 0.1f, 0);
+            }
+
+            if (direction == newDirection)
+            {
+                turningLeft = false;
+            }*/
+        }
+
         // Destroy car if outside of view
         if ((transform.position.x < -13 || transform.position.x > 13) && pastIntersection == true)
         {
             gameManager.queue.Remove(gameObject.gameObject);
-            if (direction == new Vector3(2, -1, 0))
-            {
-                gameManager.nwQueue.Remove(gameObject.gameObject);
-            }
-            else if (direction == new Vector3(2, 1, 0))
-            {
-                gameManager.swQueue.Remove(gameObject.gameObject);
-            }
-            else if (direction == new Vector3(-2, 1, 0))
-            {
-                gameManager.seQueue.Remove(gameObject.gameObject);
-            }
-            else if (direction == new Vector3(-2, -1, 0))
-            {
-                gameManager.neQueue.Remove(gameObject.gameObject);
-            }
             Destroy(gameObject);
         }
     }
@@ -277,7 +429,7 @@ public class Car : MonoBehaviour
             gameManager.queue.Add(gameObject.gameObject);
 
             // Choose which direction the car intends to turn
-            if (turning != "forward" || turning != "right" || turning != "left")
+            if (turning == "")
             {
                 if (gameManager.PercentChance(50))
                 {
@@ -299,6 +451,19 @@ public class Car : MonoBehaviour
                 }
             }
         }
+        else if (collision.transform.tag == "Intersection" && permissionToGo == true)
+        {
+            if (turning == "right")
+            {
+                turningRight = true;
+                turningLeft = false;
+            }
+            else if (turning == "left")
+            {
+                turningLeft = true;
+                turningRight = false;
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -307,59 +472,9 @@ public class Car : MonoBehaviour
         {
             atIntersection = false;
             pastIntersection = true;
-        }
-    }
 
-    public Vector2 SpeedMultiple(float multiple)
-    {
-        return new Vector2(multiple, ((multiple + 3) / 4));
-    }
-
-    public void Right()
-    {
-        if (direction == new Vector3(2, -1, 0))
-        {
-            //DownRight to DownLeft
-            direction = new Vector3(-2, -1, 0);
-        }
-        else if (direction == new Vector3(-2, -1, 0))
-        {
-            //DownLeft to UpLeft
-            direction = new Vector3(-2, 1, 0);
-        }
-        else if (direction == new Vector3(-2, 1, 0))
-        {
-            //UpLeft to UpRight
-            direction = new Vector3(2, 1, 0);
-        }
-        else if (direction == new Vector3(2, 1, 0))
-        {
-            //UpRight to DownRight
-            direction = new Vector3(2, -1, 0);
-        }
-    }
-
-    public void Left()
-    {
-        if (direction == new Vector3(2, -1, 0))
-        {
-            //DownRight to UpRight
-            direction = new Vector3(2, 1, 0);
-        }
-        else if (direction == new Vector3(-2, -1, 0))
-        {
-            //DownLeft to DownRight
-            direction = new Vector3(2, -1, 0);
-        }
-        else if (direction == new Vector3(-2, 1, 0))
-        {
-            //UpLeft to DownLeft
-            direction = new Vector3(-2, -1, 0);
-        }
-        else if (direction == new Vector3(2, 1, 0))
-        {
-            //UpRight to UpLeft
-            direction = new Vector3(-2, 1, 0);
+            turnSignal.sprite = null;
+            turning = "";
         }
     }
 }
