@@ -232,7 +232,7 @@ public class Car : MonoBehaviour
             direction += 360;
         }
 
-        if (direction < 22.5f && direction >= 337.5f)
+        if (direction < 22.5f || direction >= 337.5f)
         {
             // Right
             sr.sprite = right;
