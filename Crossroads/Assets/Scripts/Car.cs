@@ -9,6 +9,7 @@ public class Car : MonoBehaviour
     public float maxSpeed;
     public float acceleration;
     public float direction;
+    public float rotation;
     public float emergencyStop;
     public bool canGo;
     public bool permissionToGo;
@@ -82,6 +83,8 @@ public class Car : MonoBehaviour
             yDirection = -1;
             direction = 225;
         }
+
+        rotation = direction;
     }
 
     // Update is called once per frame
@@ -91,6 +94,8 @@ public class Car : MonoBehaviour
         {
             canGo = false;
         }
+
+        turnSignal.transform.rotation = new Quaternion(0, 0, direction, 0);
 
         // Stop the car before it hits obstacles
         Debug.DrawRay(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), Color.red);
@@ -218,9 +223,13 @@ public class Car : MonoBehaviour
         }
 
         // Point the car in the correct direction and use the right sprites
-        if (direction >= 360 || direction < 0)
+        if (direction >= 360)
         {
-            direction = 0;
+            direction -= 360;
+        }
+        else if (direction < 0)
+        {
+            direction += 360;
         }
 
         if (direction < 22.5f && direction >= 337.5f)
@@ -298,67 +307,64 @@ public class Car : MonoBehaviour
         }
 
         // Turn right/left
-        if (turningRight == true)
+        if (turningRight == true && permissionToGo == true)
         {
-            //Vector3 newDirection = new Vector3();
-
-            /*if (direction == new Vector3(2, -1, 0))
+            if (rotation == 45)
             {
-                //DownRight to DownLeft
-                newDirection = new Vector3(-2, -1, 0);
-
-                if (direction.x > newDirection.x)
+                // UpRight(2, 1) to DownRight(2, -1)
+                if (yDirection > -1)
                 {
-                    direction -= new Vector3(0.08f, 0, 0);
+                    yDirection -= 1.25f * Time.deltaTime;
+                    direction--;
+                }
+                else
+                {
+                    yDirection = -1;
+                    turningRight = false;
                 }
             }
-            else if (direction == new Vector3(-2, -1, 0))
+            else if (rotation == 135)
             {
-                //DownLeft to UpLeft
-                newDirection = new Vector3(-2, 1, 0);
+                // UpLeft(-2, 1) to UpRight(2, 1)
+                if (xDirection < 2)
+                {
+                    xDirection += 2.5f * Time.deltaTime;
+                    direction--;
+                }
+                else
+                {
+                    xDirection = 2;
+                    turningRight = false;
+                }
             }
-            else if (direction == new Vector3(-2, 1, 0))
+            else if (rotation == 225)
             {
-                //UpLeft to UpRight
-                newDirection = new Vector3(2, 1, 0);
+                // DownLeft(-2, -1) to UpLeft(-2, 1)
+                if (yDirection < 1)
+                {
+                    yDirection += 1.25f * Time.deltaTime;
+                    direction--;
+                }
+                else
+                {
+                    yDirection = 1;
+                    turningRight = false;
+                }
             }
-            else if (direction == new Vector3(2, 1, 0))
+            else if (rotation == 315)
             {
-                //UpRight to DownRight
-                newDirection = new Vector3(2, -1, 0);
+                // DownRight(2, -1) to DownLeft(-2, -1)
+                if (xDirection > -2)
+                {
+                    xDirection -= 2.5f * Time.deltaTime;
+                    direction--;
+                }
+                else
+                {
+                    xDirection = -2;
+                    turningRight = false;
+                }
             }
-            
-            if (direction.x < newDirection.x)
-            {
-                direction += new Vector3(0.2f, 0, 0);
-            }
-            else if (direction.x > newDirection.x)
-            {
-                direction -= new Vector3(0.2f, 0, 0);
-            }
-
-            if (direction.y < newDirection.y)
-            {
-                direction += new Vector3(0, 0.1f, 0);
-            }
-            else if (direction.y > newDirection.y)
-            {
-                direction -= new Vector3(0, 0.1f, 0);
-            }
-
-            if (xDirection < 0.08)
-            {
-                xDirection += 0.008f;
-            }
-            else
-            {
-                xDirection = 0.08f;
-            }
-
-            if (direction == newDirection)
-            {
-                turningRight = false;
-            }*/
         }
 
         if (turningLeft == true)
@@ -426,18 +432,18 @@ public class Car : MonoBehaviour
             speed = 0;
             atIntersection = true;
 
-            gameManager.queue.Add(gameObject.gameObject);
+            gameManager.queue.Add(this.gameObject);
 
             // Choose which direction the car intends to turn
             if (turning == "")
             {
-                if (gameManager.PercentChance(50))
+                if (gameManager.PercentChance(0))
                 {
                     // 50%
                     turning = "forward";
                     turnSignal.sprite = turnForward;
                 }
-                else if (gameManager.PercentChance(50))
+                else if (gameManager.PercentChance(100))
                 {
                     // 25%
                     turning = "right";

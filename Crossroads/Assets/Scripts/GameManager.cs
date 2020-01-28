@@ -15,8 +15,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> swQueue = new List<GameObject>();
 
     // Time
-    private float seconds;
-    private int minutes;
+    public float seconds;
+    public int minutes;
     public string time;
 
     public int vehicleSpawnTimer;
@@ -116,7 +116,6 @@ public class GameManager : MonoBehaviour
                 seQueue.Add(newVehicle);
 
                 Instantiate(newVehicle, newPosition, Quaternion.identity);
-                queue.Add(newVehicle);
             }
         }
         else if (PercentChance(33.33f))
@@ -127,7 +126,6 @@ public class GameManager : MonoBehaviour
                 swQueue.Add(newVehicle);
 
                 Instantiate(newVehicle, newPosition, Quaternion.identity);
-                queue.Add(newVehicle);
             }
         }
         else if (PercentChance(50))
@@ -138,7 +136,6 @@ public class GameManager : MonoBehaviour
                 nwQueue.Add(newVehicle);
 
                 Instantiate(newVehicle, newPosition, Quaternion.identity);
-                queue.Add(newVehicle);
             }
         }
         else
@@ -149,7 +146,6 @@ public class GameManager : MonoBehaviour
                 neQueue.Add(newVehicle);
 
                 Instantiate(newVehicle, newPosition, Quaternion.identity);
-                queue.Add(newVehicle);
             }
         }
     }
