@@ -30,15 +30,12 @@ public class Car : MonoBehaviour
     Vector3 newDirection = new Vector3();
     public float xDirection;
     public float yDirection;
-<<<<<<< HEAD
     public float delay;
     public int personalCount;
 
     // Path Creation
     public PathCreator pathCreator;
     public float distanceTravelled;
-=======
->>>>>>> parent of bb4afb8... Cars Turn Right/Left Perfectly
 
     // Sprites
     public SpriteRenderer sr;
@@ -104,13 +101,10 @@ public class Car : MonoBehaviour
         {
             canGo = false;
         }
-
-<<<<<<< HEAD
+        
         // Update distance travelled
         distanceTravelled += speed + Time.deltaTime;
-=======
         turnSignal.transform.rotation = new Quaternion(0, 0, direction, 0);
->>>>>>> parent of bb4afb8... Cars Turn Right/Left Perfectly
 
         // Stop the car before it hits obstacles
         Debug.DrawRay(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), Color.red);
@@ -469,7 +463,6 @@ public class Car : MonoBehaviour
                 {
                     // 50%
                     turning = "forward";
-<<<<<<< HEAD
 
                     if (direction == 135)
                     {
@@ -487,9 +480,7 @@ public class Car : MonoBehaviour
                     {
                         intersection.NETurnSignalSR.sprite = turnForward;
                     }
-=======
                     turnSignal.sprite = turnForward;
->>>>>>> parent of bb4afb8... Cars Turn Right/Left Perfectly
                 }
                 else if (gameManager.PercentChance(100))
                 {
