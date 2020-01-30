@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using PathCreation;
 
 public class Car : MonoBehaviour
 {
@@ -29,6 +30,11 @@ public class Car : MonoBehaviour
     public float xDirection;
     public float yDirection;
     public float delay;
+    public int personalCount;
+
+    // Path Creation
+    public PathCreator pathCreator;
+    public float distanceTravelled;
 
     // Sprites
     public SpriteRenderer sr;
@@ -95,6 +101,9 @@ public class Car : MonoBehaviour
         {
             canGo = false;
         }
+
+        // Update distance travelled
+        distanceTravelled += speed + Time.deltaTime;
 
         // Stop the car before it hits obstacles
         Debug.DrawRay(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), Color.red);
@@ -287,6 +296,17 @@ public class Car : MonoBehaviour
                 {
                     if (hitMouse.collider.gameObject.GetComponent<Car>().atIntersection == true)
                     {
+                        if (personalCount == gameManager.vehicleClickedCount)
+                        {
+                            Debug.Log("Success!");
+                        }
+                        else
+                        {
+                            Debug.Log("Failure!");
+                        }
+
+                        gameManager.vehicleClickedCount++;
+
                         hitMouse.collider.gameObject.GetComponent<Car>().permissionToGo = true;
                         hitMouse.collider.gameObject.GetComponent<Car>().canGo = true;
 
@@ -497,6 +517,8 @@ public class Car : MonoBehaviour
         {
             speed = 0;
             atIntersection = true;
+            personalCount = gameManager.vehicleCount;
+            gameManager.vehicleCount++;
 
             gameManager.queue.Add(this.gameObject);
 
@@ -507,12 +529,12 @@ public class Car : MonoBehaviour
                 {
                     // 50%
                     turning = "forward";
-                    
+
                     if (direction == 135)
                     {
                         intersection.SETurnSignalSR.sprite = turnForward;
                     }
-                    else if(direction == 315)
+                    else if (direction == 315)
                     {
                         intersection.NWTurnSignalSR.sprite = turnForward;
                     }
@@ -520,7 +542,7 @@ public class Car : MonoBehaviour
                     {
                         intersection.SWTurnSignalSR.sprite = turnForward;
                     }
-                    else if(direction == 225)
+                    else if (direction == 225)
                     {
                         intersection.NETurnSignalSR.sprite = turnForward;
                     }
