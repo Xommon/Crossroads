@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
     public GameObject car;
     public GameObject truck;
     public float gameTime;
-    public int vehicleCount;
-    public int vehicleClickedCount;
 
     public List<GameObject> queue = new List<GameObject>();
     public List<GameObject> neQueue = new List<GameObject>();
@@ -50,8 +48,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameTime = 1;
-        vehicleCount = 0;
-        vehicleClickedCount = 0;
     }
 
     void Update()
