@@ -20,12 +20,8 @@ public class Car : MonoBehaviour
     public GameObject objectInWay;
     public float distanceFromObjectInWay;
     public string turning;
-    public Sprite turnForward;
-    public Sprite turnRight;
-    public Sprite turnLeft;
     public bool turningRight;
     public bool turningLeft;
-    Vector3 newDirection = new Vector3();
     public float xDirection;
     public float yDirection;
     public float delay;
@@ -130,7 +126,7 @@ public class Car : MonoBehaviour
                 {
                     if (speed >= 12)
                     {
-                        emergencyStop = 1.25f;
+                        emergencyStop = 1.25f; //  * (Time.deltaTime * 60)
                         canGo = false;
                     }
                     else if (speed < 12 && speed >= 9)
@@ -272,6 +268,7 @@ public class Car : MonoBehaviour
             sr.sprite = downRight;
         }
 
+        // Movement of the car
         transform.position += new Vector3((speed / 3 * Time.deltaTime) * (xDirection / 2), (speed / 6 * Time.deltaTime) * (yDirection), 0);
 
         // Allow car to go through intersection when clicked
@@ -279,6 +276,7 @@ public class Car : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+            Debug.DrawRay(mousePos, new Vector3(45, 0, 0), Color.yellow);
 
             RaycastHit2D hitMouse = Physics2D.Raycast(mousePos2D, Vector2.zero);
             if (hitMouse.collider != null)
@@ -507,67 +505,16 @@ public class Car : MonoBehaviour
                 {
                     // 50%
                     turning = "forward";
-                    
-                    if (direction == 135)
-                    {
-                        intersection.SETurnSignalSR.sprite = turnForward;
-                    }
-                    else if(direction == 315)
-                    {
-                        intersection.NWTurnSignalSR.sprite = turnForward;
-                    }
-                    else if (direction == 45)
-                    {
-                        intersection.SWTurnSignalSR.sprite = turnForward;
-                    }
-                    else if(direction == 225)
-                    {
-                        intersection.NETurnSignalSR.sprite = turnForward;
-                    }
                 }
                 else if (gameManager.PercentChance(50))
                 {
                     // 25%
                     turning = "right";
-
-                    if (direction == 135)
-                    {
-                        intersection.SETurnSignalSR.sprite = turnRight;
-                    }
-                    else if (direction == 315)
-                    {
-                        intersection.NWTurnSignalSR.sprite = turnRight;
-                    }
-                    else if (direction == 45)
-                    {
-                        intersection.SWTurnSignalSR.sprite = turnRight;
-                    }
-                    else if (direction == 225)
-                    {
-                        intersection.NETurnSignalSR.sprite = turnRight;
-                    }
                 }
                 else
                 {
                     // 25%
                     turning = "left";
-
-                    if (direction == 135)
-                    {
-                        intersection.SETurnSignalSR.sprite = turnLeft;
-                    }
-                    else if (direction == 315)
-                    {
-                        intersection.NWTurnSignalSR.sprite = turnLeft;
-                    }
-                    else if (direction == 45)
-                    {
-                        intersection.SWTurnSignalSR.sprite = turnLeft;
-                    }
-                    else if (direction == 225)
-                    {
-                        intersection.NETurnSignalSR.sprite = turnLeft;
-                    }
                 }
             }
         }

@@ -386,10 +386,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.06021832, y: 0.14302167}
-      - {x: -0.5492779, y: -0.09838304}
-      - {x: -0.07285486, y: -0.37653807}
-      - {x: 0.39506397, y: -0.11039276}
+    - - {x: -0.05842577, y: 0.19465423}
+      - {x: -0.6314098, y: -0.09900378}
+      - {x: -0.035729818, y: -0.4062569}
+      - {x: 0.5309983, y: -0.097835444}
 --- !u!212 &74890783
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -457,3 +457,14 @@ MonoBehaviour:
   SETurnSignalSR: {fileID: 431775214}
   SWTurnSignalSR: {fileID: 1089331641}
   NWTurnSignalSR: {fileID: 1028267899}
+  NECarAtIntersection: {fileID: 0}
+  SECarAtIntersection: {fileID: 0}
+  SWCarAtIntersection: {fileID: 0}
+  NWCarAtIntersection: {fileID: 0}
+  car: {fileID: 0}
+  turnForward: {fileID: 8549013667438103870, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
+    type: 3}
+  turnRight: {fileID: -5230075003472204785, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
+    type: 3}
+  turnLeft: {fileID: 4516733618014488438, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
+    type: 3}
