@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public GameObject car;
     public GameObject truck;
     public float gameTime;
+    public Intersection intersection;
 
     public List<GameObject> queue = new List<GameObject>();
     public List<GameObject> neQueue = new List<GameObject>();
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameTime = 1;
+        intersection = FindObjectOfType<Intersection>();
     }
 
     void Update()
@@ -91,6 +93,41 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown("r"))
         {
             Application.LoadLevel(Application.loadedLevel);
+        }
+
+        // Allow car to go through intersection when clicked
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+
+            RaycastHit2D hitMouse = Physics2D.Raycast(mousePos2D, Vector2.zero);
+            if (hitMouse.collider != null)
+            {
+                if (hitMouse.collider.gameObject.transform.tag == "ClickArea")
+                {
+                    if (hitMouse.collider.gameObject.transform.name == "SWClickArea" && intersection.SWCarAtIntersection != null)
+                    {
+                        intersection.SWCarAtIntersection.permissionToGo = true;
+                        intersection.SWCarAtIntersection.canGo = true;
+                    }
+                    else if(hitMouse.collider.gameObject.transform.name == "SEClickArea" && intersection.SECarAtIntersection != null)
+                    {
+                        intersection.SECarAtIntersection.permissionToGo = true;
+                        intersection.SECarAtIntersection.canGo = true;
+                    }
+                    else if(hitMouse.collider.gameObject.transform.name == "NEClickArea" && intersection.NECarAtIntersection != null)
+                    {
+                        intersection.NECarAtIntersection.permissionToGo = true;
+                        intersection.NECarAtIntersection.canGo = true;
+                    }
+                    else if(hitMouse.collider.gameObject.transform.name == "NWClickArea" && intersection.NWCarAtIntersection != null)
+                    {
+                        intersection.NWCarAtIntersection.permissionToGo = true;
+                        intersection.NWCarAtIntersection.canGo = true;
+                    }
+                }
+            }
         }
     }
 

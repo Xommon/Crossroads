@@ -25,6 +25,9 @@ public class Car : MonoBehaviour
     public float xDirection;
     public float yDirection;
     public float delay;
+    public bool collided;
+    public GameObject collidedWithObject;
+    public LayerMask Raycastable;
 
     // Sprites
     public SpriteRenderer sr;
@@ -40,7 +43,7 @@ public class Car : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 0;
+        speed = maxSpeed;
         canGo = true;
         pastIntersection = false;
         permissionToGo = false;
@@ -49,6 +52,7 @@ public class Car : MonoBehaviour
         objectInWay = null;
         turningRight = false;
         turningLeft = false;
+        collided = false;
         intersection = FindObjectOfType<Intersection>();
         delay = 0;
 
@@ -87,16 +91,24 @@ public class Car : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (atIntersection && !permissionToGo)
+        // The vehicle cannot move if at the intersection and not given permission to go OR has been involved in a car accident
+        if ((atIntersection && !permissionToGo)/* || (collided == true && (atIntersection || pastIntersection))*/)
         {
             canGo = false;
         }
 
+        // Keep the car moving
+        if (canGo == false && permissionToGo == false && pastIntersection == false && atIntersection == false && collided == false)
+        {
+            canGo = true;
+        }
+
         // Stop the car before it hits obstacles
         Debug.DrawRay(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), Color.red);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), 3.0f);
-        if (hit) // Don't edit
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), 3.0f, Raycastable);
+        if (hit && hit.transform.gameObject.tag != "ClickArea") // Don't edit
         {
+            Debug.Log(direction + hit.transform.gameObject.name);
             Intersection intersection = hit.transform.GetComponent<Intersection>();
             Car car = hit.transform.GetComponent<Car>();
             objectInWay = hit.transform.gameObject;
@@ -270,38 +282,6 @@ public class Car : MonoBehaviour
 
         // Movement of the car
         transform.position += new Vector3((speed / 3 * Time.deltaTime) * (xDirection / 2), (speed / 6 * Time.deltaTime) * (yDirection), 0);
-
-        // Allow car to go through intersection when clicked
-        if (Input.GetMouseButtonDown(0))
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
-            Debug.DrawRay(mousePos, new Vector3(45, 0, 0), Color.yellow);
-
-            RaycastHit2D hitMouse = Physics2D.Raycast(mousePos2D, Vector2.zero);
-            if (hitMouse.collider != null)
-            {
-                if (hitMouse.collider.gameObject.GetComponent<Car>() != null)
-                {
-                    if (hitMouse.collider.gameObject.GetComponent<Car>().atIntersection == true)
-                    {
-                        hitMouse.collider.gameObject.GetComponent<Car>().permissionToGo = true;
-                        hitMouse.collider.gameObject.GetComponent<Car>().canGo = true;
-
-                        if (turning == "left")
-                        {
-                            turningLeft = true;
-                            turningRight = false;
-                        }
-                        else if (turning == "right")
-                        {
-                            turningRight = true;
-                            turningLeft = false;
-                        }
-                    }
-                }
-            }
-        }
 
         // Turn right/left
         if (turningRight == true && permissionToGo == true)
@@ -481,7 +461,7 @@ public class Car : MonoBehaviour
         }
 
         // Destroy car if outside of view
-        if ((transform.position.x < -13 || transform.position.x > 13) && pastIntersection == true)
+        if ((transform.position.x < -15 || transform.position.x > 15) && pastIntersection == true)
         {
             gameManager.queue.Remove(gameObject.gameObject);
             Destroy(gameObject);
@@ -510,11 +490,13 @@ public class Car : MonoBehaviour
                 {
                     // 25%
                     turning = "right";
+                    turningRight = true;
                 }
                 else
                 {
                     // 25%
                     turning = "left";
+                    turningLeft = true;
                 }
             }
         }
@@ -557,6 +539,15 @@ public class Car : MonoBehaviour
             atIntersection = false;
             pastIntersection = true;
             turning = "";
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.transform.tag == "Vehicle")
+        {
+            collided = true;
+            collidedWithObject = collision.gameObject;
         }
     }
 }

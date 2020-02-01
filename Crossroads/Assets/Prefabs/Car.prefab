@@ -127,17 +127,16 @@ MonoBehaviour:
   objectInWay: {fileID: 0}
   distanceFromObjectInWay: 0
   turning: 
-  turnForward: {fileID: 8549013667438103870, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
-    type: 3}
-  turnRight: {fileID: -5230075003472204785, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
-    type: 3}
-  turnLeft: {fileID: 4516733618014488438, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
-    type: 3}
   turningRight: 0
   turningLeft: 0
   xDirection: 0
   yDirection: 0
   delay: 0
+  collided: 0
+  collidedWithObject: {fileID: 0}
+  Raycastable:
+    serializedVersion: 2
+    m_Bits: 1
   sr: {fileID: 7301793413289972105}
   downRight: {fileID: 9075156759465972181, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
     type: 3}

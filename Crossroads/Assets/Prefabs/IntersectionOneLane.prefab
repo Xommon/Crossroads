@@ -461,7 +461,7 @@ MonoBehaviour:
   SECarAtIntersection: {fileID: 0}
   SWCarAtIntersection: {fileID: 0}
   NWCarAtIntersection: {fileID: 0}
-  car: {fileID: 0}
+  car: {fileID: 7301793413289972104, guid: 01d1f5bb4efc51a4fba34bb0979c1854, type: 3}
   turnForward: {fileID: 8549013667438103870, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
     type: 3}
   turnRight: {fileID: -5230075003472204785, guid: 8f052e4cdf137bb4bbe796c9b279ff93,
