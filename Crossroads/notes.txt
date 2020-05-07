@@ -1,1 +1,6 @@
-// Bugs
+:: BUGS ::
+- Turning should be distance-based, not time-based.
+
+:: TO DO ::
+- I had frame rate drop when coding for a mobile devices. My solution was to modify The Camera Rendering Path to Legacy Vertex Lit which made a whole 30fps difference.
+

@@ -44,9 +44,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 7301793413289972106, guid: 01d1f5bb4efc51a4fba34bb0979c1854, type: 3}
-  truck: {fileID: 100843188704446250, guid: 56b44cdf5a27d8f43934f846261f005e, type: 3}
+  truck: {fileID: 7301793413289972106, guid: 1184bae246f26604e9c735338e7c1672, type: 3}
+  gameTime: 0
+  intersection: {fileID: 0}
+  vehicles: []
   queue: []
   neQueue: []
   seQueue: []
   nwQueue: []
   swQueue: []
+  seconds: 0
+  minutes: 0
+  time: 
+  vehicleSpawnTimer: 0

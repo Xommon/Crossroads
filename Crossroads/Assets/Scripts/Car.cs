@@ -28,6 +28,7 @@ public class Car : MonoBehaviour
     public bool collided;
     public GameObject collidedWithObject;
     public LayerMask Raycastable;
+    public bool playerCounterIncreased;
 
     // Sprites
     public SpriteRenderer sr;
@@ -53,8 +54,10 @@ public class Car : MonoBehaviour
         turningRight = false;
         turningLeft = false;
         collided = false;
+        playerCounterIncreased = false;
         intersection = FindObjectOfType<Intersection>();
         delay = 0;
+        gameManager.vehicleCounter++;
 
         if (transform.position.x < 0 && transform.position.y >= 0)
         {
@@ -108,7 +111,6 @@ public class Car : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0.25f * xDirection, 0.25f * yDirection, 0), new Vector3(xDirection, yDirection, 0), 3.0f, Raycastable);
         if (hit && hit.transform.gameObject.tag != "ClickArea") // Don't edit
         {
-            Debug.Log(direction + hit.transform.gameObject.name);
             Intersection intersection = hit.transform.GetComponent<Intersection>();
             Car car = hit.transform.GetComponent<Car>();
             objectInWay = hit.transform.gameObject;
@@ -130,15 +132,15 @@ public class Car : MonoBehaviour
 
             if (atIntersection == false && pastIntersection == false)
             {
-                if (distanceFromObjectInWay >= 3f)
+                if (distanceFromObjectInWay >= 3.5f)
                 {
                     canGo = true;
                 }
-                else if (distanceFromObjectInWay < 3f && distanceFromObjectInWay >= 2.25f)
+                else if (distanceFromObjectInWay < 3.5f && distanceFromObjectInWay >= 2.25f)
                 {
                     if (speed >= 12)
                     {
-                        emergencyStop = 1.25f; //  * (Time.deltaTime * 60)
+                        emergencyStop = 1.25f;
                         canGo = false;
                     }
                     else if (speed < 12 && speed >= 9)
@@ -151,7 +153,7 @@ public class Car : MonoBehaviour
                         canGo = true;
                     }
                 }
-                else if (distanceFromObjectInWay < 2.25f && distanceFromObjectInWay >= 1.15f)
+                else if (distanceFromObjectInWay < 2.25f && distanceFromObjectInWay >= 1.25f)
                 {
                     if (speed >= 12)
                     {
@@ -173,7 +175,7 @@ public class Car : MonoBehaviour
                         canGo = true;
                     }
                 }
-                else if (distanceFromObjectInWay < 1.15f && distanceFromObjectInWay >= 0)
+                else if (distanceFromObjectInWay < 1.25f && distanceFromObjectInWay >= 0)
                 {
                     if (speed >= 12)
                     {
@@ -358,6 +360,12 @@ public class Car : MonoBehaviour
                     }
                 }
             }
+
+            if (playerCounterIncreased == false)
+            {
+                playerCounterIncreased = true;
+                gameManager.playerCounter++;
+            }
         }
 
         if (turningLeft == true && permissionToGo == true)
@@ -458,12 +466,18 @@ public class Car : MonoBehaviour
                     }
                 }
             }
+
+            if (playerCounterIncreased == false)
+            {
+                playerCounterIncreased = true;
+                gameManager.playerCounter++;
+            }
         }
 
         // Destroy car if outside of view
         if ((transform.position.x < -15 || transform.position.x > 15) && pastIntersection == true)
         {
-            gameManager.queue.Remove(gameObject.gameObject);
+            gameManager.queue.Remove(gameObject.GetComponent<Car>());
             Destroy(gameObject);
         }
     }
@@ -475,8 +489,6 @@ public class Car : MonoBehaviour
         {
             speed = 0;
             atIntersection = true;
-
-            gameManager.queue.Add(this.gameObject);
 
             // Choose which direction the car intends to turn
             if (turning == "")

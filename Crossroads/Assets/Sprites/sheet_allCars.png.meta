@@ -16,16 +16,16 @@ TextureImporter:
     second: car1_4
   - first:
       213: -7587401832994301614
-    second: truck1_1
+    second: truck1_DL
   - first:
       213: -4976231599503826558
-    second: truck1_2
+    second: truck1_UL
   - first:
       213: 2874966283040110012
-    second: truck1_3
+    second: truck1_UR
   - first:
       213: -5510767681339204569
-    second: truck1_4
+    second: truck1_DR
   - first:
       213: -1454870808682140939
     second: car1_left
@@ -47,6 +47,18 @@ TextureImporter:
   - first:
       213: 8549013667438103870
     second: turn_forward
+  - first:
+      213: 5667660119905176311
+    second: truck1_U
+  - first:
+      213: 5071152160662880495
+    second: truck1_D
+  - first:
+      213: 5728108780909000660
+    second: truck1_R
+  - first:
+      213: -5995654601543712612
+    second: truck1_L
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -239,7 +251,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck1_1
+      name: truck1_DL
       rect:
         serializedVersion: 2
         x: 655
@@ -260,7 +272,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck1_2
+      name: truck1_UL
       rect:
         serializedVersion: 2
         x: 591
@@ -281,7 +293,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck1_3
+      name: truck1_UR
       rect:
         serializedVersion: 2
         x: 591
@@ -302,7 +314,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: truck1_4
+      name: truck1_DR
       rect:
         serializedVersion: 2
         x: 171
@@ -465,6 +477,90 @@ TextureImporter:
       bones: []
       spriteID: a65d5c0d05924c149b27c99a158c58cc
       internalID: 8549013667438103870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck1_U
+      rect:
+        serializedVersion: 2
+        x: 814
+        y: 399
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce7695f8b0868a244b9474ea5f3075d7
+      internalID: 5667660119905176311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck1_D
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 352
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb7f2bcade61ae8488ff68113a869a55
+      internalID: 5071152160662880495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck1_R
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 108
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2d541e6ff8acf946a6dbeb450dd71cf
+      internalID: 5728108780909000660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: truck1_L
+      rect:
+        serializedVersion: 2
+        x: 750
+        y: 301
+        width: 31
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab929ff1dcef94447be84ce85961ed9a
+      internalID: -5995654601543712612
       vertices: []
       indices: 
       edges: []

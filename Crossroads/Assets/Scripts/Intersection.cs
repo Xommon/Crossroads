@@ -6,6 +6,7 @@ public class Intersection : MonoBehaviour
 {
     public int amountOfLanes;
     public GameManager gameManager;
+    public List<string> rightOfWay = new List<string>();
 
     public SpriteRenderer NETurnSignalSR;
     public SpriteRenderer SETurnSignalSR;
@@ -27,6 +28,7 @@ public class Intersection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rightOfWay.Clear();
         NETurnSignalSR.sprite = null;
         SETurnSignalSR.sprite = null;
         SWTurnSignalSR.sprite = null;
@@ -128,18 +130,22 @@ public class Intersection : MonoBehaviour
                 if (collision.gameObject.GetComponent<Car>().direction == 45)
                 {
                     SWCarAtIntersection = collision.gameObject.GetComponent<Car>();
+                    gameManager.GetComponent<RightOfWay>().getVehicle(SWCarAtIntersection);
                 }
                 else if (collision.gameObject.GetComponent<Car>().direction == 135)
                 {
                     SECarAtIntersection = collision.gameObject.GetComponent<Car>();
+                    gameManager.GetComponent<RightOfWay>().getVehicle(SECarAtIntersection);
                 }
                 else if (collision.gameObject.GetComponent<Car>().direction == 225)
                 {
                     NECarAtIntersection = collision.gameObject.GetComponent<Car>();
+                    gameManager.GetComponent<RightOfWay>().getVehicle(NECarAtIntersection);
                 }
                 else if (collision.gameObject.GetComponent<Car>().direction == 315)
                 {
                     NWCarAtIntersection = collision.gameObject.GetComponent<Car>();
+                    gameManager.GetComponent<RightOfWay>().getVehicle(NWCarAtIntersection);
                 }
             }
             else

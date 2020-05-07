@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject car;
-    public GameObject truck;
+    public Car car;
+    public Car truck;
     public float gameTime;
     public Intersection intersection;
+    public List<Car> vehicles = new List<Car>();
+    public int vehicleCounter;
+    public int playerCounter;
+    public int selection;
 
-    public List<GameObject> queue = new List<GameObject>();
-    public List<GameObject> neQueue = new List<GameObject>();
-    public List<GameObject> seQueue = new List<GameObject>();
-    public List<GameObject> nwQueue = new List<GameObject>();
-    public List<GameObject> swQueue = new List<GameObject>();
+    public List<Car> queue = new List<Car>();
+    public List<Car> neQueue = new List<Car>();
+    public List<Car> seQueue = new List<Car>();
+    public List<Car> nwQueue = new List<Car>();
+    public List<Car> swQueue = new List<Car>();
+    public List<Object> testQueue = new List<Object>();
 
     // Time
     public float seconds;
+    public float allSeconds;
     public int minutes;
     public string time;
 
@@ -45,18 +51,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        Application.targetFrameRate = 300;
+        vehicleCounter = 1;
+        playerCounter = 1;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         gameTime = 1;
         intersection = FindObjectOfType<Intersection>();
+        vehicles.Add(car);
+        vehicles.Add(truck);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // Game Time
         Time.timeScale = gameTime;
 
+        // Format the seconds for the time
         if (seconds.ToString().Length > 1)
         {
             if (seconds.ToString().Substring(1, 1) == ".")
@@ -89,6 +105,8 @@ public class GameManager : MonoBehaviour
             seconds = 0;
         }
 
+        allSeconds += Time.deltaTime;
+
         // DEBUG KEYS
         if (Input.GetKeyDown("r"))
         {
@@ -110,40 +128,82 @@ public class GameManager : MonoBehaviour
                     {
                         intersection.SWCarAtIntersection.permissionToGo = true;
                         intersection.SWCarAtIntersection.canGo = true;
+
+                        for (int i = 0; i < gameObject.GetComponent<RightOfWay>().rightOfWay.Count - 1; i++)
+                        {
+                            if (gameObject.GetComponent<RightOfWay>().rightOfWay[i].y == playerCounter)
+                            {
+                                selection = playerCounter;
+                                break;
+                            }
+                            else
+                            {
+                                selection = -1;
+                            }
+                        }
+
+                        if (selection > -1)
+                        {
+                            Debug.Log("Success!");
+                        }
+                        else
+                        {
+                            Debug.Log("Failure!");
+                        }
                     }
                     else if(hitMouse.collider.gameObject.transform.name == "SEClickArea" && intersection.SECarAtIntersection != null)
                     {
                         intersection.SECarAtIntersection.permissionToGo = true;
                         intersection.SECarAtIntersection.canGo = true;
+
+                        if (seQueue[0].gameObject.name == playerCounter.ToString())
+                        {
+                            Debug.Log("Success!");
+                        }
+                        else
+                        {
+                            Debug.Log("Failure!");
+                        }
                     }
                     else if(hitMouse.collider.gameObject.transform.name == "NEClickArea" && intersection.NECarAtIntersection != null)
                     {
                         intersection.NECarAtIntersection.permissionToGo = true;
                         intersection.NECarAtIntersection.canGo = true;
+
+                        if (neQueue[0].gameObject.name == playerCounter.ToString())
+                        {
+                            Debug.Log("Success!");
+                        }
+                        else
+                        {
+                            Debug.Log("Failure!");
+                        }
                     }
                     else if(hitMouse.collider.gameObject.transform.name == "NWClickArea" && intersection.NWCarAtIntersection != null)
                     {
                         intersection.NWCarAtIntersection.permissionToGo = true;
                         intersection.NWCarAtIntersection.canGo = true;
+
+                        if (nwQueue[0].gameObject.name == playerCounter.ToString())
+                        {
+                            Debug.Log("Success!");
+                        }
+                        else
+                        {
+                            Debug.Log("Failure!");
+                        }
                     }
                 }
             }
         }
     }
 
+    // Spawn a new vehicle
     public void CreateNewVehicle()
     {
         Vector3 newPosition = Vector3.zero;
-        GameObject newVehicle;
-
-        if (PercentChance(50))
-        {
-            newVehicle = car;
-        }
-        else
-        {
-            newVehicle = car;
-        }
+        int select = Random.Range(0, vehicles.Count);
+        Car newVehicle = vehicles[select];
 
         if (PercentChance(25))
         {
@@ -151,8 +211,11 @@ public class GameManager : MonoBehaviour
             {
                 newPosition = new Vector3(10.86f, -5.94f, 2);
                 seQueue.Add(newVehicle);
+                queue.Add(newVehicle);
 
-                Instantiate(newVehicle, newPosition, Quaternion.identity);
+                Car createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
+                createVehicle.GetComponent<Car>().name = vehicleCounter.ToString();
+                vehicleCounter++;
             }
         }
         else if (PercentChance(33.33f))
@@ -161,8 +224,11 @@ public class GameManager : MonoBehaviour
             {
                 newPosition = new Vector3(-8.93f, -5.36f, 2);
                 swQueue.Add(newVehicle);
+                queue.Add(newVehicle);
 
-                Instantiate(newVehicle, newPosition, Quaternion.identity);
+                Car createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
+                createVehicle.GetComponent<Car>().name = vehicleCounter.ToString();
+                vehicleCounter++;
             }
         }
         else if (PercentChance(50))
@@ -171,8 +237,11 @@ public class GameManager : MonoBehaviour
             {
                 newPosition = new Vector3(-10.68f, 3.96f, 2);
                 nwQueue.Add(newVehicle);
+                queue.Add(newVehicle);
 
-                Instantiate(newVehicle, newPosition, Quaternion.identity);
+                Car createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
+                createVehicle.GetComponent<Car>().name = vehicleCounter.ToString();
+                vehicleCounter++;
             }
         }
         else
@@ -181,8 +250,11 @@ public class GameManager : MonoBehaviour
             {
                 newPosition = new Vector3(9.942678f, 5.034575f, 2);
                 neQueue.Add(newVehicle);
+                queue.Add(newVehicle);
 
-                Instantiate(newVehicle, newPosition, Quaternion.identity);
+                Car createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
+                createVehicle.GetComponent<Car>().name = vehicleCounter.ToString();
+                vehicleCounter++;
             }
         }
     }
