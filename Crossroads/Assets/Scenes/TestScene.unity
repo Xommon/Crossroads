@@ -208,7 +208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34781673}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.019, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 261789868}
@@ -292,6 +292,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Tile_Hex_Road_Concrete_08 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1595272652862058, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     - target: {fileID: 4647323065761204, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.965177
@@ -355,6 +359,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car1
       objectReference: {fileID: 0}
+    - target: {fileID: 1450678834897086, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_TagString
+      value: Vehicle
+      objectReference: {fileID: 0}
     - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.42
@@ -365,7 +373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.29
+      value: -6.87
       objectReference: {fileID: 0}
     - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
       propertyPath: m_LocalRotation.x
@@ -415,7 +423,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: af19c034d5cca6542a234e64be4e980a, type: 2}
+      objectReference: {fileID: 2100000, guid: 5a0d949db5402534b86f667bce86884e, type: 2}
     - target: {fileID: 23031666244594036, guid: 0f69573a301f84b43a080ed99e4d24ef,
         type: 3}
       propertyPath: m_Enabled
@@ -466,7 +474,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.36169454, g: 0.4558364, b: 0.6037736, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -479,7 +487,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 7.5
   orthographic: 0
@@ -533,7 +541,7 @@ MonoBehaviour:
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 311
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
@@ -908,7 +916,7 @@ GameObject:
   - component: {fileID: 271781010}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -948,7 +956,7 @@ GameObject:
   - component: {fileID: 274398489}
   m_Layer: 0
   m_Name: Intersection
-  m_TagString: Untagged
+  m_TagString: Intersection
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -980,7 +988,7 @@ Transform:
   - {fileID: 984639788}
   - {fileID: 34781674}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &308351178
 GameObject:
@@ -1085,6 +1093,10 @@ PrefabInstance:
     - target: {fileID: 1589372602811386, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
       propertyPath: m_Name
       value: SM_Tile_Hex_Road_Concrete_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589372602811386, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
       objectReference: {fileID: 0}
     - target: {fileID: 4226294557132458, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2178,6 +2190,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HexTile1
       objectReference: {fileID: 0}
+    - target: {fileID: 1102586996726688, guid: 46eb94982aff66348adb055de087c053, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     - target: {fileID: 4537535509335304, guid: 46eb94982aff66348adb055de087c053, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.6351771
@@ -2575,6 +2591,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1589372602811386, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     - target: {fileID: 4226294557132458, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.17
@@ -2724,6 +2744,95 @@ Transform:
   m_Father: {fileID: 274398490}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1012335094 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1450678834897086, guid: 0f69573a301f84b43a080ed99e4d24ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 1880082185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1012335095 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef,
+    type: 3}
+  m_PrefabInstance: {fileID: 1880082185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1012335096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012335094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f6ba9d521283be4bacad30a914e5b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  vehicleType: 
+  startSpeed: 0
+  maxSpeed: 0
+  speed: 0
+  turning: 0
+  acceleration: 0.1
+  objectInWay: {fileID: 0}
+  collidedWithObject: {fileID: 0}
+  collided: 0
+  canGo: 0
+  permissionToGo: 0
+  range: 0
+  emergencyStop: 0
+  distanceFromObjectInWay: 0
+  intersection: {fileID: 0}
+  pastIntersection: 0
+  distanceFromIntersection: 0
+  atIntersection: 0
+  wheels: []
+--- !u!111 &1012335097
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012335094}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!64 &1012335098
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012335094}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 5ca09ad882316614b8e46a5692b20bef, type: 3}
+--- !u!54 &1012335099
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012335094}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &1023894211
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2734,6 +2843,10 @@ PrefabInstance:
     - target: {fileID: 1589372602811386, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
       propertyPath: m_Name
       value: SM_Tile_Hex_Road_Concrete_01 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589372602811386, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
       objectReference: {fileID: 0}
     - target: {fileID: 4226294557132458, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2822,6 +2935,87 @@ Transform:
   m_Father: {fileID: 34781674}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &1076761795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076761796}
+  - component: {fileID: 1076761797}
+  m_Layer: 0
+  m_Name: Street2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1076761796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076761795}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: -3.5717852, y: 3.4990082, z: -1.0913553}
+  m_LocalScale: {x: 149.6, y: 15.6, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1574420406}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
+--- !u!212 &1076761797
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076761795}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 2c3f65b8110caa14a97147515c52e1d0, type: 3}
+  m_Color: {r: 0.27058825, g: 0.28235295, b: 0.30980393, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.32, y: 0.32}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1100567015 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1595272652862058, guid: f73811ca885043e45a29e67edd6ad306,
@@ -3178,6 +3372,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 142939839}
+  - {fileID: 1012335095}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3574,6 +3769,10 @@ PrefabInstance:
     - target: {fileID: 1595272652862058, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
       propertyPath: m_Name
       value: SM_Tile_Hex_Road_Concrete_08 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1595272652862058, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
       objectReference: {fileID: 0}
     - target: {fileID: 4647323065761204, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4202,6 +4401,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1574420405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1574420406}
+  m_Layer: 0
+  m_Name: Streets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1574420406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1574420405}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.5717852, y: -3.526, z: 1.1010518}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2114334495}
+  - {fileID: 1076761796}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1596954659
 GameObject:
   m_ObjectHideFlags: 0
@@ -4544,6 +4775,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Tile_Hex_Road_Concrete_08 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1595272652862058, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     - target: {fileID: 4647323065761204, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6948228
@@ -4859,6 +5094,89 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &1880082185
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1195893987}
+    m_Modifications:
+    - target: {fileID: 1450678834897086, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_Name
+      value: Car1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450678834897086, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_TagString
+      value: Vehicle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 23031666244594036, guid: 0f69573a301f84b43a080ed99e4d24ef,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a0d949db5402534b86f667bce86884e, type: 2}
+    - target: {fileID: 23031666244594036, guid: 0f69573a301f84b43a080ed99e4d24ef,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
 --- !u!1 &1889596661 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1450678834897086, guid: 0f69573a301f84b43a080ed99e4d24ef,
@@ -4892,12 +5210,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f6ba9d521283be4bacad30a914e5b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  vehicleType: 
   startSpeed: 0
   maxSpeed: 10
   speed: 0
   turning: 0
   acceleration: 0.1
+  objectInWay: {fileID: 0}
+  collidedWithObject: {fileID: 0}
+  collided: 0
   canGo: 0
+  permissionToGo: 0
+  range: 0
+  emergencyStop: 0
+  distanceFromObjectInWay: 0
+  intersection: {fileID: 0}
+  pastIntersection: 0
+  distanceFromIntersection: 0
+  atIntersection: 0
   wheels: []
 --- !u!54 &1889596666
 Rigidbody:
@@ -9781,6 +10112,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Tile_Hex_Road_Concrete_08
       objectReference: {fileID: 0}
+    - target: {fileID: 1595272652862058, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
+      objectReference: {fileID: 0}
     - target: {fileID: 4647323065761204, guid: f73811ca885043e45a29e67edd6ad306, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.965177
@@ -9843,6 +10178,10 @@ PrefabInstance:
     - target: {fileID: 1589372602811386, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
       propertyPath: m_Name
       value: SM_Tile_Hex_Road_Concrete_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589372602811386, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
+      propertyPath: m_TagString
+      value: Terrain
       objectReference: {fileID: 0}
     - target: {fileID: 4226294557132458, guid: 677e7ff2822af884bb0ac232c2203788, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10084,6 +10423,87 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2c3f65b8110caa14a97147515c52e1d0, type: 3}
   m_Color: {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.32, y: 0.32}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &2114334494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2114334495}
+  - component: {fileID: 2114334496}
+  m_Layer: 0
+  m_Name: Street1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2114334495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114334494}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -4.201785, y: 3.4990082, z: -1.0913553}
+  m_LocalScale: {x: 173, y: 15.6, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1574420406}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!212 &2114334496
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114334494}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 2c3f65b8110caa14a97147515c52e1d0, type: 3}
+  m_Color: {r: 0.26873446, g: 0.28425115, b: 0.31132078, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

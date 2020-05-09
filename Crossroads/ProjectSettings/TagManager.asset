@@ -8,6 +8,7 @@ TagManager:
   - Intersection
   - TurnSignal
   - ClickArea
+  - Terrain
   layers:
   - Default
   - TransparentFX
