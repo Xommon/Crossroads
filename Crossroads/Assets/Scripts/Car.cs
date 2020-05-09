@@ -477,7 +477,7 @@ public class Car : MonoBehaviour
         // Destroy car if outside of view
         if ((transform.position.x < -15 || transform.position.x > 15) && pastIntersection == true)
         {
-            gameManager.queue.Remove(gameObject.GetComponent<Car>());
+            gameManager.queue.Remove(gameObject.GetComponent<Vehicle>());
             Destroy(gameObject);
         }
     }

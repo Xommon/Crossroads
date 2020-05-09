@@ -13,6 +13,7 @@ public class Vehicle : MonoBehaviour
     public float maxSpeed;
     public float speed;
     public float turning;
+    public string turnSignal;
     public float acceleration;
     
     // Collision detection
@@ -31,7 +32,7 @@ public class Vehicle : MonoBehaviour
     public float distanceFromIntersection;
     public bool atIntersection;
 
-
+    // Lists
     public List<GameObject> wheels = new List<GameObject>();
 
     void Start()
@@ -93,19 +94,104 @@ public class Vehicle : MonoBehaviour
             //Debug.Log("true");
         }
 
-        // Stop the vehicle before it collides with an obstacle
+        // Detect object in the way
         RaycastHit hit;
         range = 3f;
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.forward * range, Color.red);
         if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.forward, out hit, range) && hit.transform.tag != "Terrain")
         {
-            if (speed > 0)
-            {
-                Debug.Log(hit.transform.name);
-            }
             Intersection intersection = hit.transform.GetComponent<Intersection>();
-            Car car = hit.transform.GetComponent<Car>();
+            Vehicle vehicle = hit.transform.GetComponent<Vehicle>();
             objectInWay = hit.transform.gameObject;
+        }
+        
+        // Emergency stop for objects in way
+        if (objectInWay != null)
+        {
+            if (objectInWay.transform.tag == "Intersection")
+            {
+                // Distance from an intersection
+                distanceFromObjectInWay = Vector3.Distance(transform.position, objectInWay.transform.position) - 1.5f;
+            }
+            else
+            {
+                // Distance from other vehicle/pedestrian/etc
+                distanceFromObjectInWay = Vector3.Distance(transform.position, objectInWay.transform.position) - 0.2f;
+            }
+
+            if (atIntersection == false && pastIntersection == false)
+            {
+                if (distanceFromObjectInWay >= 3.5f)
+                {
+                    canGo = true;
+                }
+                else if (distanceFromObjectInWay < 3.5f && distanceFromObjectInWay >= 2.25f)
+                {
+                    if (speed >= 12)
+                    {
+                        emergencyStop = 1.25f;
+                        canGo = false;
+                    }
+                    else if (speed < 12 && speed >= 9)
+                    {
+                        emergencyStop = 1f;
+                        canGo = false;
+                    }
+                    else if (speed < 9 && speed >= 6)
+                    {
+                        canGo = true;
+                    }
+                }
+                else if (distanceFromObjectInWay < 2.25f && distanceFromObjectInWay >= 1.25f)
+                {
+                    if (speed >= 12)
+                    {
+                        emergencyStop = 1.5f;
+                        canGo = false;
+                    }
+                    else if (speed < 12 && speed >= 9)
+                    {
+                        emergencyStop = 1.25f;
+                        canGo = false;
+                    }
+                    else if (speed < 9 && speed >= 6)
+                    {
+                        emergencyStop = 1f;
+                        canGo = false;
+                    }
+                    else if (speed < 6)
+                    {
+                        canGo = true;
+                    }
+                }
+                else if (distanceFromObjectInWay < 1.25f && distanceFromObjectInWay >= 0)
+                {
+                    if (speed >= 12)
+                    {
+                        emergencyStop = 2f;
+                        canGo = false;
+                    }
+                    else if (speed < 12 && speed >= 9)
+                    {
+                        emergencyStop = 1.5f;
+                        canGo = false;
+                    }
+                    else if (speed < 9 && speed >= 6)
+                    {
+                        emergencyStop = 1.25f;
+                        canGo = false;
+                    }
+                    else if (speed < 6)
+                    {
+                        emergencyStop = 1f;
+                        canGo = false;
+                    }
+                    else
+                    {
+                        canGo = true;
+                    }
+                }
+            }
         }
 
         // The vehicle cannot move if at the intersection and not given permission to go OR has been involved in a car accident
@@ -124,7 +210,7 @@ public class Vehicle : MonoBehaviour
         {
             wheels[i].transform.rotation = new Quaternion(transform.rotation.x, turning, transform.rotation.y, transform.rotation.w);
         }*/
-
+        
         // Cap values
         if (speed > maxSpeed)
         {
@@ -142,6 +228,69 @@ public class Vehicle : MonoBehaviour
         else if (turning < -50)
         {
             turning = -50;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Intersection" && permissionToGo == false)
+        {
+            speed = 0;
+            atIntersection = true;
+
+            // Choose which direction the car intends to turn
+            if (turnSignal == "")
+            {
+                if (gameManager.PercentChance(50))
+                {
+                    // 50%
+                    turnSignal = "forward";
+                }
+                else if (gameManager.PercentChance(50))
+                {
+                    // 25%
+                    turnSignal = "right";
+                    //turningRight = true;
+                }
+                else
+                {
+                    // 25%
+                    turnSignal = "left";
+                    //turningLeft = true;
+                }
+            }
+        }
+        else if (collision.transform.tag == "Intersection" && permissionToGo == true)
+        {
+            if (turnSignal == "right")
+            {
+                //turningRight = true;
+                //turningLeft = false;
+            }
+            else if (turnSignal == "left")
+            {
+                //turningLeft = true;
+                //turningRight = false;
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Intersection")
+        {
+            atIntersection = false;
+            pastIntersection = true;
+            turnSignal = "";
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.transform.tag == "Vehicle")
+        {
+            collided = true;
+            collidedWithObject = collision.gameObject;
         }
     }
 }

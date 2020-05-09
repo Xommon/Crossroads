@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public Car car;
-    public Car truck;
+    public Vehicle car;
+    //public Car truck;
     public float gameTime;
     public Intersection intersection;
-    public List<Car> vehicles = new List<Car>();
+    public List<Vehicle> vehicles = new List<Vehicle>();
     public int vehicleCounter;
     public int playerCounter;
     public int selection;
 
-    public List<Car> queue = new List<Car>();
-    public List<Car> neQueue = new List<Car>();
-    public List<Car> seQueue = new List<Car>();
-    public List<Car> nwQueue = new List<Car>();
-    public List<Car> swQueue = new List<Car>();
+    public List<Vehicle> queue = new List<Vehicle>();
+    public List<Vehicle> neQueue = new List<Vehicle>();
+    public List<Vehicle> seQueue = new List<Vehicle>();
+    public List<Vehicle> nwQueue = new List<Vehicle>();
+    public List<Vehicle> swQueue = new List<Vehicle>();
     public List<Object> testQueue = new List<Object>();
 
     // Time
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         gameTime = 1;
         intersection = FindObjectOfType<Intersection>();
         vehicles.Add(car);
-        vehicles.Add(truck);
+        //vehicles.Add(truck);
     }
 
     void FixedUpdate()
@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
     {
         Vector3 newPosition = Vector3.zero;
         int select = Random.Range(0, vehicles.Count);
-        Car newVehicle = vehicles[select];
+        Vehicle newVehicle = vehicles[select];
 
         if (PercentChance(25))
         {
@@ -213,8 +213,8 @@ public class GameManager : MonoBehaviour
                 seQueue.Add(newVehicle);
                 queue.Add(newVehicle);
 
-                Car createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
-                createVehicle.GetComponent<Car>().name = vehicleCounter.ToString();
+                Vehicle createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
+                createVehicle.GetComponent<Vehicle>().name = vehicleCounter.ToString();
                 vehicleCounter++;
             }
         }
@@ -226,8 +226,8 @@ public class GameManager : MonoBehaviour
                 swQueue.Add(newVehicle);
                 queue.Add(newVehicle);
 
-                Car createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
-                createVehicle.GetComponent<Car>().name = vehicleCounter.ToString();
+                Vehicle createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
+                createVehicle.GetComponent<Vehicle>().name = vehicleCounter.ToString();
                 vehicleCounter++;
             }
         }
@@ -239,8 +239,8 @@ public class GameManager : MonoBehaviour
                 nwQueue.Add(newVehicle);
                 queue.Add(newVehicle);
 
-                Car createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
-                createVehicle.GetComponent<Car>().name = vehicleCounter.ToString();
+                Vehicle createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
+                createVehicle.GetComponent<Vehicle>().name = vehicleCounter.ToString();
                 vehicleCounter++;
             }
         }
@@ -252,8 +252,8 @@ public class GameManager : MonoBehaviour
                 neQueue.Add(newVehicle);
                 queue.Add(newVehicle);
 
-                Car createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
-                createVehicle.GetComponent<Car>().name = vehicleCounter.ToString();
+                Vehicle createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
+                createVehicle.GetComponent<Vehicle>().name = vehicleCounter.ToString();
                 vehicleCounter++;
             }
         }
