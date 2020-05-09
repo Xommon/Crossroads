@@ -53,7 +53,7 @@ public class Vehicle : MonoBehaviour
     
     void Update()
     {
-        // Move the car
+        // Move the vehicle
         //transform.position += new Vector3(0, 0, speed / 150);
         transform.position += transform.forward * (speed / 150);
         if (canGo)
@@ -73,7 +73,7 @@ public class Vehicle : MonoBehaviour
             if (speed > 0)
             {
                 // Decelerate
-                speed -= (acceleration * 1.5f); //* emergencyStop
+                speed -= (acceleration * 1.5f) * emergencyStop;
             }
             else
             {
@@ -81,19 +81,28 @@ public class Vehicle : MonoBehaviour
             }
         }
 
-        // Keep the car moving
-        if (canGo == false && permissionToGo == false && pastIntersection == false && atIntersection == false && collided == false)
+        // Keep the vehicle moving if the wheels are on the ground
+        if (transform.rotation.z > 50 || transform.rotation.z < -50)
+        {
+            canGo = false;
+            //Debug.Log("false");
+        }
+        else if (canGo == false && permissionToGo == false && pastIntersection == false && atIntersection == false && collided == false)
         {
             canGo = true;
+            //Debug.Log("true");
         }
 
-        // Stop the car before it collides with an obstacle
+        // Stop the vehicle before it collides with an obstacle
         RaycastHit hit;
-        range = 1000f;
-        Debug.DrawRay(transform.position, transform.forward, Color.red);
-        if (Physics.Raycast(transform.position, transform.forward, out hit, range) && hit.transform.tag != "Terrain")
+        range = 3f;
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.forward * range, Color.red);
+        if (Physics.Raycast(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.forward, out hit, range) && hit.transform.tag != "Terrain")
         {
-            Debug.Log(hit.transform.name);
+            if (speed > 0)
+            {
+                Debug.Log(hit.transform.name);
+            }
             Intersection intersection = hit.transform.GetComponent<Intersection>();
             Car car = hit.transform.GetComponent<Car>();
             objectInWay = hit.transform.gameObject;
