@@ -26,7 +26,7 @@ public class Vehicle : MonoBehaviour
     void Update()
     {
         // Move the car
-        if (canGo == true)
+        if (canGo)
         {
             if (speed < maxSpeed)
             {
@@ -50,6 +50,8 @@ public class Vehicle : MonoBehaviour
                 speed = 0;
             }
         }
+
+        transform.position += new Vector3(0, 0, speed / 150);
 
         // Turn and spin the wheels
         for (int i = 0; i < wheels.Count; i++)

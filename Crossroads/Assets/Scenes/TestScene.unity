@@ -331,7 +331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.29
+      value: -2.29
       objectReference: {fileID: 0}
     - target: {fileID: 4461125318024022, guid: 0f69573a301f84b43a080ed99e4d24ef, type: 3}
       propertyPath: m_LocalRotation.x
@@ -704,6 +704,50 @@ Transform:
   - {fileID: 953070654}
   m_Father: {fileID: 0}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &274398488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 274398490}
+  - component: {fileID: 274398489}
+  m_Layer: 0
+  m_Name: Intersection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &274398489
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398488}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.2395477, y: 0.28548956, z: 3.4149754}
+  m_Center: {x: -0.008661747, y: 0.35725522, z: 0.03074181}
+--- !u!4 &274398490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274398488}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &308351178
 GameObject:
@@ -3334,7 +3378,7 @@ MonoBehaviour:
   maxSpeed: 10
   speed: 0
   turning: 0
-  acceleration: 0
+  acceleration: 0.1
   canGo: 0
   wheels: []
 --- !u!54 &1889596666
