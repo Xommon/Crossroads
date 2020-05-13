@@ -527,19 +527,19 @@ public class Car : MonoBehaviour
 
             if (rotation == 135)
             {
-                intersection.SETurnSignalSR.sprite = null;
+                intersection.NTurnSignalSR.sprite = null;
             }
             else if (rotation == 315)
             {
-                intersection.NWTurnSignalSR.sprite = null;
+                intersection.ETurnSignalSR.sprite = null;
             }
             else if (rotation == 45)
             {
-                intersection.SWTurnSignalSR.sprite = null;
+                intersection.STurnSignalSR.sprite = null;
             }
             else if (rotation == 225)
             {
-                intersection.NETurnSignalSR.sprite = null;
+                intersection.WTurnSignalSR.sprite = null;
             }
         }
     }

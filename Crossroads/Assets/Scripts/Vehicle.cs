@@ -15,6 +15,11 @@ public class Vehicle : MonoBehaviour
     public float turning;
     public string turnSignal;
     public float acceleration;
+    public bool spawning;
+    public float startingX;
+    public float startingZ;
+    public bool onGround;
+    public float direction;
     
     // Collision detection
     public GameObject objectInWay;
@@ -42,8 +47,12 @@ public class Vehicle : MonoBehaviour
         permissionToGo = false;
         atIntersection = false;
         emergencyStop = 1;
+        speed = 5;
         objectInWay = null;
         collided = false;
+        spawning = true;
+        startingX = transform.position.x;
+        intersection = FindObjectOfType<Intersection>();
 
         // Create list of wheels
         foreach (Transform child in transform)
@@ -51,12 +60,37 @@ public class Vehicle : MonoBehaviour
             wheels.Add(child.gameObject);
         }
     }
-    
+
     void Update()
     {
+        // Move the vehicle to the board
+        if (spawning)
+        {
+            transform.gameObject.GetComponent<Rigidbody>().useGravity = false;
+            transform.position = new Vector3(startingX, transform.position.y, transform.position.z);
+            if (transform.rotation.x < 0)
+            {
+                transform.Rotate(13, 0, 0, Space.Self);
+            }
+            else
+            {
+                transform.position = new Vector3(0.37f, 0, -6.87f);
+                transform.rotation = Quaternion.identity;
+                spawning = false;
+            }
+        }
+        else
+        {
+            transform.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        }
+
         // Move the vehicle
         //transform.position += new Vector3(0, 0, speed / 150);
-        transform.position += transform.forward * (speed / 150);
+        if (onGround)
+        {
+            transform.position += transform.forward * (speed / 150);
+        }
+
         if (canGo)
         {
             if (speed < maxSpeed)
@@ -83,15 +117,13 @@ public class Vehicle : MonoBehaviour
         }
 
         // Keep the vehicle moving if the wheels are on the ground
-        if (transform.rotation.z > 50 || transform.rotation.z < -50)
+        if (!onGround)
         {
             canGo = false;
-            //Debug.Log("false");
         }
         else if (canGo == false && permissionToGo == false && pastIntersection == false && atIntersection == false && collided == false)
         {
             canGo = true;
-            //Debug.Log("true");
         }
 
         // Detect object in the way
@@ -104,7 +136,63 @@ public class Vehicle : MonoBehaviour
             Vehicle vehicle = hit.transform.GetComponent<Vehicle>();
             objectInWay = hit.transform.gameObject;
         }
-        
+
+        // Calculate direction of vehicle
+        //direction = gameObject.transform.rotation.y;
+        /*if (direction >= 360)
+        {
+            direction -= 360;
+        }
+        else if (direction < 0)
+        {
+            direction += 360;
+        }*/
+
+        if (gameObject.transform.rotation.y > 360)
+        {
+            gameObject.transform.Rotate(-360, 0, 0, Space.Self);
+        }
+        if (gameObject.transform.rotation.y < 22.5f || gameObject.transform.rotation.y >= 337.5f)
+        {
+            // Down
+            direction = 0;
+        }
+        else if (gameObject.transform.rotation.y < 67.5f && gameObject.transform.rotation.y >= 22.5f)
+        {
+            // DownRight
+            direction = 315;
+        }
+        else if (gameObject.transform.rotation.y < 112.5f && gameObject.transform.rotation.y >= 67.5f)
+        {
+            // Right
+            direction = 270;
+        }
+        else if (gameObject.transform.rotation.y < 157.5f && gameObject.transform.rotation.y >= 112.5f)
+        {
+            // UpRight
+            direction = 225;
+        }
+        else if (gameObject.transform.rotation.y < 202.5f && gameObject.transform.rotation.y >= 157.5f)
+        {
+            // Up
+            direction = 180;
+        }
+        else if (gameObject.transform.rotation.y < 247.5f && gameObject.transform.rotation.y >= 202.5f)
+        {
+            // UpLeft
+            direction = 135;
+        }
+        else if (gameObject.transform.rotation.y < 292.5f && gameObject.transform.rotation.y >= 247.5f)
+        {
+            // Left
+            direction = 90;
+        }
+        else if (gameObject.transform.rotation.y < 337.5f && gameObject.transform.rotation.y >= 292.5f)
+        {
+            // DownLeft
+            direction = 45;
+        }
+
         // Emergency stop for objects in way
         if (objectInWay != null)
         {
@@ -231,8 +319,9 @@ public class Vehicle : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
+         // Collision with intersection
         if (collision.transform.tag == "Intersection" && permissionToGo == false)
         {
             speed = 0;
@@ -275,7 +364,7 @@ public class Vehicle : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.transform.tag == "Intersection")
         {
@@ -285,12 +374,28 @@ public class Vehicle : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
+        // Check if vehicle is on the ground
+        if (collision.transform.tag == "Terrain")//  && (transform.rotation.z > 50.0f || transform.rotation.z < -50.0f))
+        {
+            onGround = true;
+        }
+
+        // Vehicle crashes
         if (collision.gameObject.transform.tag == "Vehicle")
         {
             collided = true;
             collidedWithObject = collision.gameObject;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        // Check if vehicle is on the ground
+        if (collision.transform.tag == "Terrain")// && (transform.rotation.z > 50.0f || transform.rotation.z < -50.0f))
+        {
+            onGround = false;
         }
     }
 }

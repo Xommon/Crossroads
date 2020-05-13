@@ -28,7 +28,7 @@ public class RightOfWay : MonoBehaviour
         vehicleCount = 1;
     }
 
-    public void getVehicle(Car vehicle)
+    public void getVehicle(Vehicle vehicle)
     {
         // Add vechile and assign it an order
         if (rightOfWay.Count == 0)

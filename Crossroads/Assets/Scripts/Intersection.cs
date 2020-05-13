@@ -8,17 +8,17 @@ public class Intersection : MonoBehaviour
     public GameManager gameManager;
     public List<string> rightOfWay = new List<string>();
 
-    public SpriteRenderer NETurnSignalSR;
-    public SpriteRenderer SETurnSignalSR;
-    public SpriteRenderer SWTurnSignalSR;
-    public SpriteRenderer NWTurnSignalSR;
+    public SpriteRenderer NTurnSignalSR;
+    public SpriteRenderer ETurnSignalSR;
+    public SpriteRenderer STurnSignalSR;
+    public SpriteRenderer WTurnSignalSR;
 
-    public Car NECarAtIntersection;
-    public Car SECarAtIntersection;
-    public Car SWCarAtIntersection;
-    public Car NWCarAtIntersection;
+    public Vehicle NVehicleAtIntersection;
+    public Vehicle EVehicleAtIntersection;
+    public Vehicle SVehicleAtIntersection;
+    public Vehicle WVehicleAtIntersection;
 
-    public Car car;
+    public Vehicle vehicle;
 
     // Sprites
     public Sprite turnForward;
@@ -29,142 +29,142 @@ public class Intersection : MonoBehaviour
     void Start()
     {
         rightOfWay.Clear();
-        NETurnSignalSR.sprite = null;
-        SETurnSignalSR.sprite = null;
-        SWTurnSignalSR.sprite = null;
-        NWTurnSignalSR.sprite = null;
+        NTurnSignalSR.sprite = null;
+        ETurnSignalSR.sprite = null;
+        STurnSignalSR.sprite = null;
+        WTurnSignalSR.sprite = null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Change turn signal based on car at intersection
-        if (NECarAtIntersection != null)
+        // Change turn signal based on Vehicle at intersection
+        if (NVehicleAtIntersection != null)
         {
-            if (NECarAtIntersection.turning == "forward")
+            if (NVehicleAtIntersection.turnSignal == "forward")
             {
-                NETurnSignalSR.sprite = turnForward;
+                NTurnSignalSR.sprite = turnForward;
             }
-            else if (NECarAtIntersection.turning == "right")
+            else if (NVehicleAtIntersection.turnSignal == "right")
             {
-                NETurnSignalSR.sprite = turnRight;
+                NTurnSignalSR.sprite = turnRight;
             }
-            else if (NECarAtIntersection.turning == "left")
+            else if (NVehicleAtIntersection.turnSignal == "left")
             {
-                NETurnSignalSR.sprite = turnLeft;
+                NTurnSignalSR.sprite = turnLeft;
             }
             else
             {
-                NETurnSignalSR.sprite = null;
+                NTurnSignalSR.sprite = null;
             }
         }
 
-        if (SECarAtIntersection != null)
+        if (EVehicleAtIntersection != null)
         {
-            if (SECarAtIntersection.turning == "forward")
+            if (EVehicleAtIntersection.turnSignal == "forward")
             {
-                SETurnSignalSR.sprite = turnForward;
+                ETurnSignalSR.sprite = turnForward;
             }
-            else if (SECarAtIntersection.turning == "right")
+            else if (EVehicleAtIntersection.turnSignal == "right")
             {
-                SETurnSignalSR.sprite = turnRight;
+                ETurnSignalSR.sprite = turnRight;
             }
-            else if (SECarAtIntersection.turning == "left")
+            else if (EVehicleAtIntersection.turnSignal == "left")
             {
-                SETurnSignalSR.sprite = turnLeft;
+                ETurnSignalSR.sprite = turnLeft;
             }
             else
             {
-                SETurnSignalSR.sprite = null;
+                ETurnSignalSR.sprite = null;
             }
         }
 
-        if (SWCarAtIntersection != null)
+        if (SVehicleAtIntersection != null)
         {
-            if (SWCarAtIntersection.turning == "forward")
+            if (SVehicleAtIntersection.turnSignal == "forward")
             {
-                SWTurnSignalSR.sprite = turnForward;
+                STurnSignalSR.sprite = turnForward;
             }
-            else if (SWCarAtIntersection.turning == "right")
+            else if (SVehicleAtIntersection.turnSignal == "right")
             {
-                SWTurnSignalSR.sprite = turnRight;
+                STurnSignalSR.sprite = turnRight;
             }
-            else if (SWCarAtIntersection.turning == "left")
+            else if (SVehicleAtIntersection.turnSignal == "left")
             {
-                SWTurnSignalSR.sprite = turnLeft;
+                STurnSignalSR.sprite = turnLeft;
             }
             else
             {
-                SWTurnSignalSR.sprite = null;
+                STurnSignalSR.sprite = null;
             }
         }
 
-        if (NWCarAtIntersection != null)
+        if (WVehicleAtIntersection != null)
         {
-            if (NWCarAtIntersection.turning == "forward")
+            if (WVehicleAtIntersection.turnSignal == "forward")
             {
-                NWTurnSignalSR.sprite = turnForward;
+                WTurnSignalSR.sprite = turnForward;
             }
-            else if (NWCarAtIntersection.turning == "right")
+            else if (WVehicleAtIntersection.turnSignal == "right")
             {
-                NWTurnSignalSR.sprite = turnRight;
+                WTurnSignalSR.sprite = turnRight;
             }
-            else if (NWCarAtIntersection.turning == "left")
+            else if (WVehicleAtIntersection.turnSignal == "left")
             {
-                NWTurnSignalSR.sprite = turnLeft;
+                WTurnSignalSR.sprite = turnLeft;
             }
             else
             {
-                NWTurnSignalSR.sprite = null;
+                WTurnSignalSR.sprite = null;
             }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.GetComponent<Car>() != null)
+        if (collision.gameObject.GetComponent<Vehicle>() != null)
         {
-            // Tell the intersection when a car is there
-            if (collision.gameObject.GetComponent<Car>().permissionToGo == false)
+            // Tell the intersection when a Vehicle is there
+            if (collision.gameObject.GetComponent<Vehicle>().permissionToGo == false)
             {
-                if (collision.gameObject.GetComponent<Car>().direction == 45)
+                if (collision.gameObject.GetComponent<Vehicle>().direction == 0)
                 {
-                    SWCarAtIntersection = collision.gameObject.GetComponent<Car>();
-                    gameManager.GetComponent<RightOfWay>().getVehicle(SWCarAtIntersection);
+                    NVehicleAtIntersection = collision.gameObject.GetComponent<Vehicle>();
+                    gameManager.GetComponent<RightOfWay>().getVehicle(NVehicleAtIntersection);
                 }
-                else if (collision.gameObject.GetComponent<Car>().direction == 135)
+                else if (collision.gameObject.GetComponent<Vehicle>().direction == 90)
                 {
-                    SECarAtIntersection = collision.gameObject.GetComponent<Car>();
-                    gameManager.GetComponent<RightOfWay>().getVehicle(SECarAtIntersection);
+                    EVehicleAtIntersection = collision.gameObject.GetComponent<Vehicle>();
+                    gameManager.GetComponent<RightOfWay>().getVehicle(EVehicleAtIntersection);
                 }
-                else if (collision.gameObject.GetComponent<Car>().direction == 225)
+                else if (collision.gameObject.GetComponent<Vehicle>().direction == 180)
                 {
-                    NECarAtIntersection = collision.gameObject.GetComponent<Car>();
-                    gameManager.GetComponent<RightOfWay>().getVehicle(NECarAtIntersection);
+                    SVehicleAtIntersection = collision.gameObject.GetComponent<Vehicle>();
+                    gameManager.GetComponent<RightOfWay>().getVehicle(SVehicleAtIntersection);
                 }
-                else if (collision.gameObject.GetComponent<Car>().direction == 315)
+                else if (collision.gameObject.GetComponent<Vehicle>().direction == 270)
                 {
-                    NWCarAtIntersection = collision.gameObject.GetComponent<Car>();
-                    gameManager.GetComponent<RightOfWay>().getVehicle(NWCarAtIntersection);
+                    WVehicleAtIntersection = collision.gameObject.GetComponent<Vehicle>();
+                    gameManager.GetComponent<RightOfWay>().getVehicle(WVehicleAtIntersection);
                 }
             }
             else
             {
-                if (collision.gameObject.GetComponent<Car>().direction == 45)
+                if (collision.gameObject.GetComponent<Vehicle>().direction == 0)
                 {
-                    SWCarAtIntersection = null;
+                    NVehicleAtIntersection = null;
                 }
-                else if (collision.gameObject.GetComponent<Car>().direction == 135)
+                else if (collision.gameObject.GetComponent<Vehicle>().direction == 90)
                 {
-                    SECarAtIntersection = null;
+                    EVehicleAtIntersection = null;
                 }
-                else if (collision.gameObject.GetComponent<Car>().direction == 225)
+                else if (collision.gameObject.GetComponent<Vehicle>().direction == 180)
                 {
-                    NECarAtIntersection = null;
+                    SVehicleAtIntersection = null;
                 }
-                else if (collision.gameObject.GetComponent<Car>().direction == 315)
+                else if (collision.gameObject.GetComponent<Vehicle>().direction == 270)
                 {
-                    NWCarAtIntersection = null;
+                    WVehicleAtIntersection = null;
                 }
             }
         }

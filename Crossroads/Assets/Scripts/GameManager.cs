@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public Vehicle car;
-    //public Car truck;
+    //public Vehicle truck;
     public float gameTime;
     public Intersection intersection;
     public List<Vehicle> vehicles = new List<Vehicle>();
@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour
     public int selection;
 
     public List<Vehicle> queue = new List<Vehicle>();
-    public List<Vehicle> neQueue = new List<Vehicle>();
-    public List<Vehicle> seQueue = new List<Vehicle>();
-    public List<Vehicle> nwQueue = new List<Vehicle>();
-    public List<Vehicle> swQueue = new List<Vehicle>();
+    public List<Vehicle> NQueue = new List<Vehicle>();
+    public List<Vehicle> EQueue = new List<Vehicle>();
+    public List<Vehicle> SQueue = new List<Vehicle>();
+    public List<Vehicle> WQueue = new List<Vehicle>();
     public List<Object> testQueue = new List<Object>();
 
     // Time
@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
             if (vehicleSpawnTimer > 100)
             {
                 vehicleSpawnTimer = 0;
-                CreateNewVehicle();
+                //CreateNewVehicle();
             }
             else
             {
@@ -124,10 +124,10 @@ public class GameManager : MonoBehaviour
             {
                 if (hitMouse.collider.gameObject.transform.tag == "ClickArea")
                 {
-                    if (hitMouse.collider.gameObject.transform.name == "SWClickArea" && intersection.SWCarAtIntersection != null)
+                    if (hitMouse.collider.gameObject.transform.name == "NClickArea" && intersection.NVehicleAtIntersection != null)
                     {
-                        intersection.SWCarAtIntersection.permissionToGo = true;
-                        intersection.SWCarAtIntersection.canGo = true;
+                        intersection.NVehicleAtIntersection.permissionToGo = true;
+                        intersection.NVehicleAtIntersection.canGo = true;
 
                         for (int i = 0; i < gameObject.GetComponent<RightOfWay>().rightOfWay.Count - 1; i++)
                         {
@@ -151,12 +151,12 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Failure!");
                         }
                     }
-                    else if(hitMouse.collider.gameObject.transform.name == "SEClickArea" && intersection.SECarAtIntersection != null)
+                    else if(hitMouse.collider.gameObject.transform.name == "EClickArea" && intersection.EVehicleAtIntersection != null)
                     {
-                        intersection.SECarAtIntersection.permissionToGo = true;
-                        intersection.SECarAtIntersection.canGo = true;
+                        intersection.EVehicleAtIntersection.permissionToGo = true;
+                        intersection.EVehicleAtIntersection.canGo = true;
 
-                        if (seQueue[0].gameObject.name == playerCounter.ToString())
+                        if (EQueue[0].gameObject.name == playerCounter.ToString())
                         {
                             Debug.Log("Success!");
                         }
@@ -165,12 +165,12 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Failure!");
                         }
                     }
-                    else if(hitMouse.collider.gameObject.transform.name == "NEClickArea" && intersection.NECarAtIntersection != null)
+                    else if(hitMouse.collider.gameObject.transform.name == "SClickArea" && intersection.SVehicleAtIntersection != null)
                     {
-                        intersection.NECarAtIntersection.permissionToGo = true;
-                        intersection.NECarAtIntersection.canGo = true;
+                        intersection.SVehicleAtIntersection.permissionToGo = true;
+                        intersection.SVehicleAtIntersection.canGo = true;
 
-                        if (neQueue[0].gameObject.name == playerCounter.ToString())
+                        if (SQueue[0].gameObject.name == playerCounter.ToString())
                         {
                             Debug.Log("Success!");
                         }
@@ -179,12 +179,12 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Failure!");
                         }
                     }
-                    else if(hitMouse.collider.gameObject.transform.name == "NWClickArea" && intersection.NWCarAtIntersection != null)
+                    else if(hitMouse.collider.gameObject.transform.name == "NWClickArea" && intersection.WVehicleAtIntersection != null)
                     {
-                        intersection.NWCarAtIntersection.permissionToGo = true;
-                        intersection.NWCarAtIntersection.canGo = true;
+                        intersection.WVehicleAtIntersection.permissionToGo = true;
+                        intersection.WVehicleAtIntersection.canGo = true;
 
-                        if (nwQueue[0].gameObject.name == playerCounter.ToString())
+                        if (WQueue[0].gameObject.name == playerCounter.ToString())
                         {
                             Debug.Log("Success!");
                         }
@@ -207,10 +207,10 @@ public class GameManager : MonoBehaviour
 
         if (PercentChance(25))
         {
-            if (seQueue.Count < 7)
+            if (NQueue.Count < 7)
             {
                 newPosition = new Vector3(10.86f, -5.94f, 2);
-                seQueue.Add(newVehicle);
+                NQueue.Add(newVehicle);
                 queue.Add(newVehicle);
 
                 Vehicle createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
@@ -220,10 +220,10 @@ public class GameManager : MonoBehaviour
         }
         else if (PercentChance(33.33f))
         {
-            if (swQueue.Count < 8)
+            if (EQueue.Count < 8)
             {
                 newPosition = new Vector3(-8.93f, -5.36f, 2);
-                swQueue.Add(newVehicle);
+                EQueue.Add(newVehicle);
                 queue.Add(newVehicle);
 
                 Vehicle createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
@@ -233,10 +233,10 @@ public class GameManager : MonoBehaviour
         }
         else if (PercentChance(50))
         {
-            if (nwQueue.Count < 8)
+            if (SQueue.Count < 8)
             {
                 newPosition = new Vector3(-10.68f, 3.96f, 2);
-                nwQueue.Add(newVehicle);
+                SQueue.Add(newVehicle);
                 queue.Add(newVehicle);
 
                 Vehicle createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
@@ -246,10 +246,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (neQueue.Count < 8)
+            if (WQueue.Count < 8)
             {
                 newPosition = new Vector3(9.942678f, 5.034575f, 2);
-                neQueue.Add(newVehicle);
+                WQueue.Add(newVehicle);
                 queue.Add(newVehicle);
 
                 Vehicle createVehicle = Instantiate(newVehicle, newPosition, Quaternion.identity);
